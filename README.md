@@ -1,7 +1,7 @@
 # Balance-City-SDL
 A quick game made to learn SDL2
 
-#Dependencies
+# Dependencies
 SDL2
 SDL2_image
 SDL2_mixer
