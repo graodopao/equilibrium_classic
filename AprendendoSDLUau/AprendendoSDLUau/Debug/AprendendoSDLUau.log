@@ -1,0 +1,35 @@
+﻿  GameManager.cpp
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(1,10): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\AnimatedTexture.h(2,10): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\AnimatedTexture.h(3,10): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\Graphics.h(5,10): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\Graphics.h(8,10): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(27,6): warning C4551: faltando lista de argumentos na chamada de função
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(78,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(83,53): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(92,53): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(106,25): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(106,21): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(219,183): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(219,140): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(219,94): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(219,51): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(230,183): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(230,140): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(230,94): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(230,51): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(245,184): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(245,141): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(245,95): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(245,52): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(251,184): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(251,141): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(251,95): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(251,52): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(328,84): warning C4244: '+=': conversão de 'double' para 'float', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(331,19): warning C4244: 'argumento': conversão de 'float' para 'Uint8', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(332,25): warning C4244: 'argumento': conversão de 'float' para 'Uint8', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(390,58): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(394,53): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
+C:\Users\tiago\source\repos\AprendendoSDLUau\AprendendoSDLUau\GameManager.cpp(396,18): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+  AprendendoSDLUau.vcxproj -> C:\Users\tiago\source\repos\AprendendoSDLUau\Debug\AprendendoSDLUau.exe
