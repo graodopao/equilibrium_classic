@@ -1,4 +1,4 @@
-# Balance-City-SDL
+# Equilibrium: Classic
 A simple game about balancing a city on top of a platform, built using SDL2.
 
 # Dependencies
