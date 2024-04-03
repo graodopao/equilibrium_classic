@@ -48,6 +48,7 @@
     <ProjectGuid>{96110379-6aad-4f10-9664-26f23ae74609}</ProjectGuid>
     <RootNamespace>AprendendoSDLUau</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>EquilibriumClassic</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
