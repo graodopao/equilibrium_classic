@@ -1,0 +1,3 @@
+C:/Users/tiago/Documents/GitHub/Equilibrium-Classic/AprendendoSDLUau/cmake-build-debug/CMakeFiles/AprendendoSDLUau.dir
+C:/Users/tiago/Documents/GitHub/Equilibrium-Classic/AprendendoSDLUau/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/tiago/Documents/GitHub/Equilibrium-Classic/AprendendoSDLUau/cmake-build-debug/CMakeFiles/rebuild_cache.dir

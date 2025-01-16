@@ -1,0 +1,6 @@
+"C:\Program Files\JetBrains\CLion 2024.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2024.2.2/bin/ninja/win/x64/ninja.exe" -DCMAKE_TOOLCHAIN_FILE=C:\Users\tiago\.vcpkg-clion\vcpkg\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic -G Ninja -S C:\Users\tiago\Documents\GitHub\Equilibrium-Classic\AprendendoSDLUau -B C:\Users\tiago\Documents\GitHub\Equilibrium-Classic\AprendendoSDLUau\cmake-build-debug
+CMake Error at CMakeLists.txt:21:
+  Parse error.  Function missing ending ")".  End of file reached.
+
+
+-- Configuring incomplete, errors occurred!
