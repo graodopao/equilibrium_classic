@@ -1,3 +1,0 @@
-[submodule "AprendendoSDLUau/cmake/sdl2"]
-	path = AprendendoSDLUau/cmake/sdl2
-	url = https://github.com/opeik/cmake-modern-findsdl2

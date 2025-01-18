@@ -1,6 +1,6 @@
 # ninja log v6
 29	812	7587449793415510	CMakeFiles/AprendendoSDLUau.dir/main.cpp.obj	38464e79fe4aab18
-2	231	7587457445314112	build.ninja	714a098ec5f52d24
+2	600	7588689521723444	build.ninja	714a098ec5f52d24
 12	188	7587449793250355	CMakeFiles/AprendendoSDLUau.dir/GameEntity.cpp.obj	8ac32961bde04b74
 6	772	7587449793175181	CMakeFiles/AprendendoSDLUau.dir/AnimatedTexture.cpp.obj	f4264eaf8647ff6d
 21	646	7587449793330354	CMakeFiles/AprendendoSDLUau.dir/InputManager.cpp.obj	1988a3ab86139dd6
@@ -11,4 +11,7 @@
 15	879	7587449793270353	CMakeFiles/AprendendoSDLUau.dir/GameManager.cpp.obj	15c2f2bbee0fedec
 8	993	7587449793205216	CMakeFiles/AprendendoSDLUau.dir/AssetManager.cpp.obj	60b077ad2b7ef301
 6	2380	7587454281995736	AprendendoSDLUau.exe	e3a85fa04c752ef2
-2	600	7587457445314112	build.ninja	714a098ec5f52d24
+6	666	7588691323063457	CMakeFiles/AprendendoSDLUau.dir/AudioManager.cpp.obj	e92cb05ac47015a3
+666	3356	7588691329671573	AprendendoSDLUau.exe	e3a85fa04c752ef2
+13	632	7589113520664973	CMakeFiles/AprendendoSDLUau.dir/AudioManager.cpp.obj	e92cb05ac47015a3
+632	3228	7589113526859363	AprendendoSDLUau.exe	e3a85fa04c752ef2
