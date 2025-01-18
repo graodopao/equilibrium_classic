@@ -1,4 +1,4 @@
-#include "GameManager.h"
+#include "nashira/GameManager.h"
 using namespace nashira;
 
 int main(int argc, char* args[])

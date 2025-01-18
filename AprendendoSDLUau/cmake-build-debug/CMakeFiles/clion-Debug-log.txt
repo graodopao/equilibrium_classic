@@ -1,1 +1,0 @@
-CMakeLists.txt not found in C:\Users\tiago\Documents\GitHub\Equilibrium-Classic\AprendendoSDLUau Select CMakeLists.txt
