@@ -1,4 +1,4 @@
-#include "Timer.h";
+#include "timer.h";
 using namespace nashira;
 
 Timer* Timer::sInstance = std::nullptr_t();
@@ -24,7 +24,7 @@ Timer::Timer()
 {
 	Reset();
 	mElapsedTicks = 0;
-	mDelataTime = 0.0f;
+	mDeltaTime = 0.0f;
 	mTimeScale = 1.0f;
 }
 
@@ -40,7 +40,7 @@ void Timer::Reset()
 
 float Timer::DeltaTime()
 {
-	return mDelataTime;
+	return mDeltaTime;
 }
 
 void Timer::TimeScale(float t)
@@ -56,5 +56,5 @@ float Timer::TimeScale()
 void Timer::Update()
 {
 	mElapsedTicks = SDL_GetTicks() - mStartTicks;
-	mDelataTime = mElapsedTicks * 0.001f;
+	mDeltaTime = mElapsedTicks * 0.001f;
 }

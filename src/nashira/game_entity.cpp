@@ -1,4 +1,4 @@
-#include "GameEntity.h"
+#include "game_entity.h"
 using namespace nashira;
 
 GameEntity::GameEntity(float x, float y)

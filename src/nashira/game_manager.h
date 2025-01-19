@@ -1,8 +1,8 @@
 #pragma once
 
 #include "AnimatedTexture.h"
-#include "InputManager.h"
-#include "AudioManager.h"
+#include "input_manager.h"
+#include "audio_manager.h"
 #include <vector>
 #include <time.h>
 

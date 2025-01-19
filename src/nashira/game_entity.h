@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MathHelper.h"
+#include "math_helper.h"
 
 namespace nashira {
 	class GameEntity

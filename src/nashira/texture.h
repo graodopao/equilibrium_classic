@@ -1,7 +1,7 @@
 #pragma once
-#include "GameEntity.h"
-#include "Timer.h"
-#include "AssetManager.h"
+#include "game_entity.h"
+#include "timer.h"
+#include "asset_manager.h"
 
 namespace nashira {
 	class Texture : public GameEntity

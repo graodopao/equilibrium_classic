@@ -1,6 +1,6 @@
 #pragma once
-#include "Timer.h";
-#include "Texture.h";
+#include "timer.h";
+#include "texture.h";
 
 namespace nashira {
 	class AnimatedTexture : public Texture

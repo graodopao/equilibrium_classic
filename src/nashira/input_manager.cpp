@@ -1,4 +1,4 @@
-#include "InputManager.h"
+#include "input_manager.h"
 using namespace nashira;
 
 InputManager* InputManager::sInstance = NULL;

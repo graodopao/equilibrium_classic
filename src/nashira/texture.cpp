@@ -1,4 +1,4 @@
-#include "Texture.h"
+#include "texture.h"
 using namespace nashira;
 
 Texture::Texture(std::string filename)

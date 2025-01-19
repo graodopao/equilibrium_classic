@@ -10,7 +10,7 @@ namespace nashira {
 
 		unsigned int mStartTicks;
 		unsigned int mElapsedTicks;
-		float mDelataTime;
+		float mDeltaTime;
 		float mTimeScale;
 
 	public:

@@ -1,4 +1,4 @@
-#include "Graphics.h";
+#include "graphics.h";
 using namespace nashira;
 
 Graphics* Graphics::sInstance = NULL;

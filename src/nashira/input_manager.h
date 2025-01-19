@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <string.h>
-#include "MathHelper.h"
+#include "math_helper.h"
 
 namespace nashira {
 	class InputManager
