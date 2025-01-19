@@ -1,73 +1,72 @@
 #include "animated_texture.h"
+
+#include <utility>
 using namespace nashira;
 
-AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int w, int h, int frameCount, float animationSpeed, ANIM_DIR animationDir)
-	: Texture(filename, x, y, w, h)
+AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int w, int h, int frame_count, float animation_speed, ANIM_DIR animationDir)
+	: Texture(std::move(filename), x, y, w, h)
 {
-	mTimer = Timer::Instance();
+	m_timer = Timer::Instance();
 
-	mStartX = x;
-	mStartY = y;
+	m_start_x = x;
+	m_start_y = y;
 
-	mFrameCount = frameCount;
-	mAnimationSpeed = animationSpeed;
-	mTimePerFrame = mAnimationSpeed / mFrameCount;
-	mAnimationTimer = 0.0f;
+	m_frame_count = frame_count;
+	m_animation_speed = animation_speed;
+	m_time_per_frame = m_animation_speed / static_cast<float>(m_frame_count);
+	m_animation_timer = 0.0f;
 
-	mAnimationDirection = animationDir;
+	m_animation_direction = animationDir;
 
-	mAnimationDone = false;
+	m_animation_done = false;
 
-	mWrapMode = loop;
+	m_wrap_mode = loop;
 }
 
-AnimatedTexture::~AnimatedTexture()
-{
-
-}
+AnimatedTexture::~AnimatedTexture()= default;
 
 void AnimatedTexture::WrapMode(WRAP_MODE mode)
 {
-	mWrapMode = mode;
+	m_wrap_mode = mode;
 }
 
 void AnimatedTexture::setSpeed(float animationSpeed)
 {
-	mAnimationSpeed = animationSpeed;
+	m_animation_speed = animationSpeed;
 }
 
 void AnimatedTexture::setFrame(float timer)
 {
-	mAnimationTimer = timer;
-	mAnimationDone = false;
+	m_animation_timer = timer;
+	m_animation_done = false;
 }
 
 void AnimatedTexture::Update()
 {
-	if (!mAnimationDone)
+	if (!m_animation_done)
 	{
-		mAnimationTimer += mTimer->DeltaTime();
+		m_animation_timer += m_timer->DeltaTime();
 
-		if (mAnimationTimer >= mAnimationSpeed)
+		if (m_animation_timer >= m_animation_speed)
 		{
-			if (mWrapMode == loop)
+			if (m_wrap_mode == loop)
 			{
-				mAnimationTimer -= mAnimationSpeed;
+				m_animation_timer -= m_animation_speed;
 			}
 			else
 			{
-				mAnimationDone = true;
-				mAnimationTimer = mAnimationSpeed - mTimePerFrame;
+				m_animation_done = true;
+				m_animation_timer = m_animation_speed - m_time_per_frame;
 			}
 		}
 
-		if (mAnimationDirection == horizontal)
+		if (m_animation_direction == horizontal)
 		{
-			mClipRect.x = mStartX + (int)(mAnimationTimer / mTimePerFrame) * mWidth;
+			m_clip_rect.x = m_start_x + static_cast<int>(m_animation_timer / m_time_per_frame) * m_width;
 		}
 		else
 		{
-			mClipRect.y = mStartY + (int)(mAnimationTimer / mTimePerFrame) * mHeight;
+			m_clip_rect.y = m_start_y + static_cast<int>(m_animation_timer / m_time_per_frame) * m_height;
 		}
 	}
 }

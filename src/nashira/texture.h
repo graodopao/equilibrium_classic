@@ -13,12 +13,12 @@ namespace nashira {
 		Graphics* mGraphics;
 		Timer* mTimer;
 
-		int mWidth;
-		int mHeight;
+		int m_width;
+		int m_height;
 
 		bool mClipped;
 		SDL_Rect mRenderRect;
-		SDL_Rect mClipRect;
+		SDL_Rect m_clip_rect;
 
 		Uint8 alpha = 1;
 
@@ -40,7 +40,7 @@ namespace nashira {
 
 		void particleUpdate(float deltaTime);
 
-		~Texture();
+		virtual ~Texture();
 
 		float GetWidth();
 		float GetHeight();

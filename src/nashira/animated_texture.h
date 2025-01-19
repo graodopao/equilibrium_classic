@@ -3,7 +3,7 @@
 #include "texture.h";
 
 namespace nashira {
-	class AnimatedTexture : public Texture
+	class AnimatedTexture final : public Texture
 	{
 	public:
 		enum WRAP_MODE
@@ -19,31 +19,30 @@ namespace nashira {
 		};
 
 	private:
+		Timer* m_timer;
 
-		Timer* mTimer;
+		int m_start_x;
+		int m_start_y;
 
-		int mStartX;
-		int mStartY;
+		float m_animation_timer;
+		float m_animation_speed;
+		float m_time_per_frame;
 
-		float mAnimationTimer;
-		float mAnimationSpeed;
-		float mTimePerFrame;
+		int m_frame_count;
 
-		int mFrameCount;
+		WRAP_MODE m_wrap_mode;
+		ANIM_DIR m_animation_direction;
 
-		WRAP_MODE mWrapMode;
-		ANIM_DIR mAnimationDirection;
-
-		bool mAnimationDone;
+		bool m_animation_done;
 
 	public:
 
-		AnimatedTexture(std::string filename, int x, int y, int w, int h, int frameCount, float animationSpeed, ANIM_DIR aniamtionDirection);
-		~AnimatedTexture();
+		AnimatedTexture(std::string filename, int x, int y, int w, int h, int frame_count, float animation_speed, ANIM_DIR animation_direction);
+		~AnimatedTexture() override;
 
 		void WrapMode(WRAP_MODE mode);
 
-		void Update();
+		void Update() override;
 
 		void setSpeed(float mAnimationSpeed);
 		void setFrame(float frame);

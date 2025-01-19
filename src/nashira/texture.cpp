@@ -7,12 +7,12 @@ Texture::Texture(std::string filename)
 
 	mTex = AssetManager::Instance()->GetTexture(filename);
 
-	SDL_QueryTexture(mTex, NULL, NULL, &mWidth, &mHeight);
+	SDL_QueryTexture(mTex, NULL, NULL, &m_width, &m_height);
 
 	mClipped = false;
 
-	mRenderRect.w = mWidth;
-	mRenderRect.h = mHeight;
+	mRenderRect.w = m_width;
+	mRenderRect.h = m_height;
 }
 
 Texture::Texture(std::string filename, int x, int y, int w, int h)
@@ -23,26 +23,26 @@ Texture::Texture(std::string filename, int x, int y, int w, int h)
 
 	mClipped = true;
 
-	mWidth = w;
-	mHeight = h;
+	m_width = w;
+	m_height = h;
 
-	mRenderRect.w = mWidth;
-	mRenderRect.h = mHeight;
+	mRenderRect.w = m_width;
+	mRenderRect.h = m_height;
 
-	mClipRect.x = x;
-	mClipRect.y = y;
-	mClipRect.w = mWidth;
-	mClipRect.h = mHeight;
+	m_clip_rect.x = x;
+	m_clip_rect.y = y;
+	m_clip_rect.w = m_width;
+	m_clip_rect.h = m_height;
 }
 
 float Texture::GetWidth()
 {
-	return mWidth;
+	return m_width;
 }
 
 float Texture::GetHeight()
 {
-	return mHeight;
+	return m_height;
 }
 
 void Texture::SetAlpha(Uint8 alpha)
@@ -149,7 +149,7 @@ float Texture::buildingUpdate(float deltaTime, float angle, float leftPoint, flo
 				{
 					Rise(5.0f, maxHeight);
 
-					if (mHeight < maxHeight)
+					if (m_height < maxHeight)
 					{
 						Translate(VEC2_UP * -2.5f);
 					}
@@ -187,7 +187,7 @@ float Texture::buildingUpdate(float deltaTime, float angle, float leftPoint, flo
 
 			case (deconstruct):
 
-				if (mHeight > 0)
+				if (m_height > 0)
 				{
 					Translate(VEC2_UP * 5.0f);
 				}
@@ -205,7 +205,7 @@ float Texture::buildingUpdate(float deltaTime, float angle, float leftPoint, flo
 
 	if (currentBuildingState != falling)
 	{
-		return mWidth * mHeight / 50;
+		return m_width * m_height / 50;
 	}
 	else
 	{
@@ -243,22 +243,22 @@ void Texture::buildingDemolish()
 
 void Texture::Rise(float amount, float cap)
 {
-	mClipRect.h += amount;
-	mHeight += amount;
+	m_clip_rect.h += amount;
+	m_height += amount;
 
-	mClipRect.h = SDL_clamp(mClipRect.h, 0, cap);
-	mHeight = SDL_clamp(mHeight, 0, cap);
+	m_clip_rect.h = SDL_clamp(m_clip_rect.h, 0, cap);
+	m_height = SDL_clamp(m_height, 0, cap);
 }
 
 void Texture::Unrise(float amount)
 {
-	mClipRect.h -= amount;
-	mHeight -= amount;
+	m_clip_rect.h -= amount;
+	m_height -= amount;
 
-	mClipRect.h = SDL_clamp(mClipRect.h, 0, 1000);
-	mHeight = SDL_clamp(mHeight, 0, 1000);
+	m_clip_rect.h = SDL_clamp(m_clip_rect.h, 0, 1000);
+	m_height = SDL_clamp(m_height, 0, 1000);
 
-	if (mHeight <= 0)
+	if (m_height <= 0)
 	{
 		currentBuildingState = demolished;
 	}
@@ -271,10 +271,10 @@ Texture::Texture(std::string text, std::string fontPath, int size, SDL_Color col
 
 	mClipped = false;
 
-	SDL_QueryTexture(mTex, NULL, NULL, &mWidth, &mHeight);
+	SDL_QueryTexture(mTex, NULL, NULL, &m_width, &m_height);
 
-	mRenderRect.w = mWidth;
-	mRenderRect.h = mHeight;
+	mRenderRect.w = m_width;
+	mRenderRect.h = m_height;
 }
 
 Texture::~Texture()
@@ -287,12 +287,12 @@ void Texture::Render()
 {
 	Vector2 pos = Pos(world);
 	Vector2 scale = Scale(world);
-	mRenderRect.x = (int)(pos.x - mWidth*scale.x * 0.5f);
-	mRenderRect.y = (int)(pos.y - mHeight*scale.y * 0.5f);
-	mRenderRect.w = (int)(mWidth * scale.x);
-	mRenderRect.h = (int)(mHeight * scale.y);
+	mRenderRect.x = (int)(pos.x - m_width*scale.x * 0.5f);
+	mRenderRect.y = (int)(pos.y - m_height*scale.y * 0.5f);
+	mRenderRect.w = (int)(m_width * scale.x);
+	mRenderRect.h = (int)(m_height * scale.y);
 
-	mGraphics->DrawTexture(mTex, mClipped ? &mClipRect : NULL, &mRenderRect, Rotation(world));
+	mGraphics->DrawTexture(mTex, mClipped ? &m_clip_rect : NULL, &mRenderRect, Rotation(world));
 
 	if (secondTexture != NULL)
 	{
