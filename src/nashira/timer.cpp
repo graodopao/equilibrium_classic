@@ -1,60 +1,55 @@
 #include "timer.h";
 using namespace nashira;
 
-Timer* Timer::sInstance = std::nullptr_t();
+Timer* Timer::s_instance = std::nullptr_t();
 
-Timer* Timer::Instance()
+Timer* Timer::instance()
 {
-	if (sInstance == NULL)
+	if (s_instance == nullptr)
 	{
-		sInstance = new Timer();
+		s_instance = new Timer();
 	}
 
-	return sInstance;
+	return s_instance;
 }
 
-void Timer::Release()
+void Timer::release()
 {
-	delete sInstance;
-	sInstance = NULL;
+	delete s_instance;
+	s_instance = nullptr;
 }
 
 
 Timer::Timer()
 {
-	Reset();
-	mElapsedTicks = 0;
-	mDeltaTime = 0.0f;
-	mTimeScale = 1.0f;
+	reset();
+	m_elapsed_ticks = 0;
+	m_delta_time = 0.0f;
+	m_time_scale = 1.0f;
 }
 
-Timer::~Timer()
-{
+Timer::~Timer() = default;
 
+void Timer::reset()
+{
+	m_start_ticks = SDL_GetTicks();
 }
 
-void Timer::Reset()
-{
-	mStartTicks = SDL_GetTicks();
+float Timer::delta_time() const {
+	return m_delta_time;
 }
 
-float Timer::DeltaTime()
+void Timer::time_scale(float t)
 {
-	return mDeltaTime;
+	m_time_scale = t;
 }
 
-void Timer::TimeScale(float t)
-{
-	mTimeScale = t;
+float Timer::time_scale() const {
+	return m_time_scale;
 }
 
-float Timer::TimeScale()
+void Timer::update()
 {
-	return mTimeScale;
-}
-
-void Timer::Update()
-{
-	mElapsedTicks = SDL_GetTicks() - mStartTicks;
-	mDeltaTime = mElapsedTicks * 0.001f;
+	m_elapsed_ticks = SDL_GetTicks() - m_start_ticks;
+	m_delta_time = static_cast<float>(m_elapsed_ticks) * 0.001f;
 }

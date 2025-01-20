@@ -6,25 +6,25 @@ namespace nashira {
 	{
 
 	private:
-		static Timer* sInstance;
+		static Timer* s_instance;
 
-		unsigned int mStartTicks;
-		unsigned int mElapsedTicks;
-		float mDeltaTime;
-		float mTimeScale;
+		unsigned int m_start_ticks{};
+		unsigned int m_elapsed_ticks;
+		float m_delta_time;
+		float m_time_scale;
 
 	public:
 
-		static Timer* Instance();
-		static void Release();
+		static Timer* instance();
+		static void release();
 
-		void Reset();
-		float DeltaTime();
+		void reset();
+		float delta_time() const;
 
-		void TimeScale(float t);
-		float TimeScale();
+		void time_scale(float t);
+		float time_scale() const;
 
-		void Update();
+		void update();
 
 	private:
 

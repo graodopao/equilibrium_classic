@@ -1,33 +1,34 @@
 #include "texture.h"
 using namespace nashira;
 
+
 Texture::Texture(std::string filename)
 {
-	mGraphics = Graphics::Instance();
+	m_graphics = Graphics::instance();
 
-	mTex = AssetManager::Instance()->GetTexture(filename);
+	m_tex = AssetManager::instance()->get_texture(filename);
 
-	SDL_QueryTexture(mTex, NULL, NULL, &m_width, &m_height);
+	SDL_QueryTexture(m_tex, NULL, NULL, &m_width, &m_height);
 
-	mClipped = false;
+	m_clipped = false;
 
-	mRenderRect.w = m_width;
-	mRenderRect.h = m_height;
+	m_render_rect.w = m_width;
+	m_render_rect.h = m_height;
 }
 
 Texture::Texture(std::string filename, int x, int y, int w, int h)
 {
-	mGraphics = Graphics::Instance();
+	m_graphics = Graphics::instance();
 
-	mTex = AssetManager::Instance()->GetTexture(filename);
+	m_tex = AssetManager::instance()->get_texture(filename);
 
-	mClipped = true;
+	m_clipped = true;
 
 	m_width = w;
 	m_height = h;
 
-	mRenderRect.w = m_width;
-	mRenderRect.h = m_height;
+	m_render_rect.w = m_width;
+	m_render_rect.h = m_height;
 
 	m_clip_rect.x = x;
 	m_clip_rect.y = y;
@@ -35,132 +36,129 @@ Texture::Texture(std::string filename, int x, int y, int w, int h)
 	m_clip_rect.h = m_height;
 }
 
-float Texture::GetWidth()
-{
+int Texture::get_width() const {
 	return m_width;
 }
 
-float Texture::GetHeight()
-{
+int Texture::get_height() const {
 	return m_height;
 }
 
-void Texture::SetAlpha(Uint8 alpha)
-{
-	SDL_SetTextureAlphaMod(mTex, alpha);
+void Texture::set_alpha(Uint8 alpha) const {
+	SDL_SetTextureAlphaMod(m_tex, alpha);
 }
 
-float Texture::RotatePoint(Vector2 pos, float dist, float dir)
+float Texture::rotate_point(Vector2 pos, float dist, float dir)
 {
-	GameEntity* temp = new GameEntity(pos.x, pos.y);
+	auto* temp = new GameEntity(pos.x, pos.y);
 	temp->Rotate(dir);
 	temp->Translate(Vector2(dist, 0.0f));
 
-	float result = temp->Pos().x;
+	const float result = temp->get_position().x;
 
 	delete temp;
-	temp = NULL;
+	temp = nullptr;
 
 	return result;
 }
 
-void Texture::particleUpdate(float deltaTime)
+void Texture::particle_update(float deltaTime)
 {
-	particleTick += 1000 * deltaTime;
-	horizontalParticleTick += 750 * deltaTime;
+	particle_tick += 1000 * deltaTime;
+	horizontal_particle_tick += 750 * deltaTime;
 
-	if (particleTick >= particleMoveUpdate)
+	if (particle_tick >= particle_move_update)
 	{
-		particleTick = 0;
+		particle_tick = 0;
 
 		Translate(Vector2(0, 2.5));
 
-		if (Pos().y > 720)
+		if (get_position().y > 720)
 		{
-			Pos(Vector2(Pos().x, 0));
+			set_position(Vector2(get_position().x, 0));
 		}
 	}
 
-	if (horizontalParticleTick >= horizontalParticleMoveUpdate)
+	if (horizontal_particle_tick >= horizontal_particle_move_update)
 	{
-		horizontalParticleTick = 0;
+		horizontal_particle_tick = 0;
 
-		int _x = rand() % 5 + 0;
+		const int _x = rand() % 5 + 0;
 		Translate(Vector2(_x - 2.5, 0));
 
-		if (Pos().x > 1280)
+		if (get_position().x > 1280)
 		{
-			Pos(Vector2(0, Pos().y));
+			set_position(Vector2(0, get_position().y));
 		}
-		else if (Pos().x < 0)
+		else if (get_position().x < 0)
 		{
-			Pos(Vector2(1280, Pos().y));
+			set_position(Vector2(1280, get_position().y));
 		}
 	}
 }
 
-float Texture::buildingUpdate(float deltaTime, float angle, float leftPoint, float rightPoint, int& objective, int& objective_term)
+float Texture::building_update(float delta_time, float angle, float leftPoint, float rightPoint, int& objective, int& objective_term)
 {
-	buildingIdleTick += 20 * deltaTime;
+	building_idle_tick += 20 * delta_time;
 
-	if (secondTexture != NULL)
+	if (second_texture != nullptr)
 	{
-		secondTexture->buildingUpdate(deltaTime, angle, leftPoint, rightPoint, objective, objective_term);
+		second_texture->building_update(delta_time, angle, leftPoint, rightPoint, objective, objective_term);
 	}
 
-	if (abs(Rotation()) > 10 && currentBuildingState != falling && buildingIdleTick > buildingIdleCooldown)
+	if (abs(Rotation()) > 10 && current_building_state != falling && building_idle_tick > building_idle_cooldown)
 	{
-		float pos = angle > 0 ? 130 : -130;
+		float direction = angle > 0 ? 130 : -130;
 
-		Translate((VEC2_RIGHT * (pos * (abs(angle - 10) / 50))) * deltaTime);
+		Translate((RIGHT * (direction * (abs(angle - 10) / 50))) * delta_time);
 
-		if (Pos().x > rightPoint || Pos().x < leftPoint)
+		if (get_position().x > rightPoint || get_position().x < leftPoint)
 		{
 
-			if (currentBuildingState != falling)
+			if (current_building_state != falling)
 			{
-				if (secondTexture != NULL)
+				if (second_texture != nullptr)
 				{
-					objective -= currentBuildingState == built ? 2 : 1;
+					objective -= current_building_state == built ? 2 : 1;
 					objective_term++;
 				}
-				currentBuildingState = falling;
+				current_building_state = falling;
 
-				Vector2 lastpos = Pos(world);
+				Vector2 last_pos = get_position(WORLD);
 
-				Parent(NULL);
-				Pos(lastpos);
+				parent(nullptr);
+				set_position(last_pos);
 			}
 		}
 	}
 
-	riseTick += 120.0f * deltaTime;
+	rise_tick += 120.0f * delta_time;
 
-	if (riseTick >= riseCooldown)
+	if (rise_tick >= rise_cooldown)
 	{
-		riseTick = 0.0f;
+		rise_tick = 0.0f;
 
-		switch (currentBuildingState)
+		switch (current_building_state)
 		{
 
 			case (building):
 
-				if (buildingIdleTick > buildingIdleCooldown)
+				if (building_idle_tick > building_idle_cooldown)
 				{
-					Rise(5.0f, maxHeight);
+					rise(5.0f, static_cast<float>(max_height));
 
-					if (m_height < maxHeight)
+					if (m_height < max_height)
 					{
-						Translate(VEC2_UP * -2.5f);
+						Translate(UP * -2.5f);
 					}
 					else
 					{
-						if (secondTexture != NULL)
+						if (second_texture != nullptr)
 						{
 							objective++;
 						}
 
-						currentBuildingState = built;
+						current_building_state = built;
 					}
 				}
 
@@ -168,18 +166,18 @@ float Texture::buildingUpdate(float deltaTime, float angle, float leftPoint, flo
 
 			case(built):
 
-				if (secondTexture != NULL)
+				if (second_texture != nullptr)
 				{
 
-					if (secondTexture->isDemolished())
+					if (second_texture->is_demolished())
 					{
 						printf("Terminated\n");
 						objective_term++;
-						secondTexture = NULL;
+						second_texture = nullptr;
 					}
 					else
 					{
-						secondTexture->buildingDemolish();
+						second_texture->building_demolish();
 					}
 				}
 
@@ -189,59 +187,58 @@ float Texture::buildingUpdate(float deltaTime, float angle, float leftPoint, flo
 
 				if (m_height > 0)
 				{
-					Translate(VEC2_UP * 5.0f);
+					Translate(UP * 5.0f);
 				}
 				else
 				{
-					currentBuildingState = built;
+					current_building_state = built;
 				}
 
-			Unrise(10.0f);
+			decrease(10.0f);
 
 			break;
-
+			default: ;
 		}
 	}
 
-	if (currentBuildingState != falling)
+	if (current_building_state != falling)
 	{
 		return m_width * m_height / 50;
 	}
 	else
 	{
-		Rotate(((Pos().x > Graphics::SCREEN_WIDTH / 2) ? (90.0f * deltaTime) : (-90.0f * deltaTime)));
-		Translate(Vector2(Pos().x > Graphics::SCREEN_WIDTH / 2 ? 30.0f * deltaTime : -30.0f * deltaTime, vspd * deltaTime));
+		Rotate(((get_position().x > Graphics::SCREEN_WIDTH / 2.0f) ? (90.0f * delta_time) : (-90.0f * delta_time)));
+		Translate(Vector2(get_position().x > Graphics::SCREEN_WIDTH / 2.0f ? 30.0f * delta_time : -30.0f * delta_time, vertical_speed * delta_time));
 
-		vspd += gravity;
+		vertical_speed += gravity;
 
 		return 0;
 	}
 }
 
-bool Texture::isDemolished()
-{
-	return (currentBuildingState == demolished);
+bool Texture::is_demolished() const {
+	return (current_building_state == demolished);
 }
 
-void Texture::setBuilding(Texture* frameTexture, int maximumHeight, bool isFrame, float constructionCooldown)
+void Texture::set_building(Texture* frameTexture, int maximumHeight, bool isFrame, float constructionCooldown)
 {
-	maxHeight = maximumHeight;
+	max_height = maximumHeight;
 
 	if (!isFrame)
 	{
-		secondTexture = frameTexture;
-		secondTexture->setBuilding(NULL, maximumHeight, true, constructionCooldown);
+		second_texture = frameTexture;
+		second_texture->set_building(nullptr, maximumHeight, true, constructionCooldown);
 	}
 
-	buildingIdleCooldown = constructionCooldown;
+	building_idle_cooldown = constructionCooldown;
 }
 
-void Texture::buildingDemolish()
+void Texture::building_demolish()
 {
-	currentBuildingState = deconstruct;
+	current_building_state = deconstruct;
 }
 
-void Texture::Rise(float amount, float cap)
+void Texture::rise(const int amount, const float cap)
 {
 	m_clip_rect.h += amount;
 	m_height += amount;
@@ -250,7 +247,7 @@ void Texture::Rise(float amount, float cap)
 	m_height = SDL_clamp(m_height, 0, cap);
 }
 
-void Texture::Unrise(float amount)
+void Texture::decrease(const int amount)
 {
 	m_clip_rect.h -= amount;
 	m_height -= amount;
@@ -260,42 +257,42 @@ void Texture::Unrise(float amount)
 
 	if (m_height <= 0)
 	{
-		currentBuildingState = demolished;
+		current_building_state = demolished;
 	}
 }
 
-Texture::Texture(std::string text, std::string fontPath, int size, SDL_Color color)
+Texture::Texture(const std::string &text, const std::string &font_path, int size, SDL_Color color)
 {
-	mGraphics = Graphics::Instance();
-	mTex = AssetManager::Instance()->GetText(text, fontPath, size, color);
+	m_graphics = Graphics::instance();
+	m_tex = AssetManager::instance()->get_text(text, font_path, size, color);
 
-	mClipped = false;
+	m_clipped = false;
 
-	SDL_QueryTexture(mTex, NULL, NULL, &m_width, &m_height);
+	SDL_QueryTexture(m_tex, nullptr, nullptr, &m_width, &m_height);
 
-	mRenderRect.w = m_width;
-	mRenderRect.h = m_height;
+	m_render_rect.w = m_width;
+	m_render_rect.h = m_height;
 }
 
 Texture::~Texture()
 {
-	mTex = NULL;
-	mGraphics = NULL;
+	m_tex = NULL;
+	m_graphics = NULL;
 }
 
-void Texture::Render()
+void Texture::render()
 {
-	Vector2 pos = Pos(world);
-	Vector2 scale = Scale(world);
-	mRenderRect.x = (int)(pos.x - m_width*scale.x * 0.5f);
-	mRenderRect.y = (int)(pos.y - m_height*scale.y * 0.5f);
-	mRenderRect.w = (int)(m_width * scale.x);
-	mRenderRect.h = (int)(m_height * scale.y);
+	Vector2 pos = get_position(WORLD);
+	Vector2 scale = Scale(WORLD);
+	m_render_rect.x = (int)(pos.x - m_width*scale.x * 0.5f);
+	m_render_rect.y = (int)(pos.y - m_height*scale.y * 0.5f);
+	m_render_rect.w = (int)(m_width * scale.x);
+	m_render_rect.h = (int)(m_height * scale.y);
 
-	mGraphics->DrawTexture(mTex, mClipped ? &m_clip_rect : NULL, &mRenderRect, Rotation(world));
+	m_graphics->draw_texture(m_tex, m_clipped ? &m_clip_rect : NULL, &m_render_rect, Rotation(WORLD));
 
-	if (secondTexture != NULL)
+	if (second_texture != NULL)
 	{
-		secondTexture->Render();
+		second_texture->render();
 	}
 }

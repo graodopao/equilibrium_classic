@@ -7,30 +7,30 @@ namespace nashira {
 	class AssetManager
 	{
 	private:
-		static AssetManager* sInstance;
+		static AssetManager* s_instance;
 
-		std::map<std::string, SDL_Texture*> mTextures;
-		std::map<std::string, SDL_Texture*> mText;
-		std::map<std::string, TTF_Font*> mFonts;
-		std::map<std::string, Mix_Music*> mMusic;
-		std::map<std::string, Mix_Chunk*> mSFX;
+		std::map<std::string, SDL_Texture*> m_textures;
+		std::map<std::string, SDL_Texture*> m_text;
+		std::map<std::string, TTF_Font*> m_fonts;
+		std::map<std::string, Mix_Music*> m_music;
+		std::map<std::string, Mix_Chunk*> m_sfx;
 
 	public:
 
-		static AssetManager* Instance();
-		static void Release();
+		static AssetManager* instance();
+		static void release();
 
-		SDL_Texture* GetTexture(std::string filename);
-		SDL_Texture* GetText(std::string text, std::string filename, int size, SDL_Color color);
+		SDL_Texture* get_texture(const std::string &filename);
+		SDL_Texture* get_text(const std::string &text, const std::string &filename, int size, SDL_Color color);
 
-		Mix_Music* GetMusic(std::string filename);
-		Mix_Chunk* GetSFX(std::string filename);
+		Mix_Music* get_music(const std::string &filename);
+		Mix_Chunk* get_sfx(const std::string &filename);
 
 	private:
 
 		AssetManager();
 		~AssetManager();
 
-		TTF_Font* GetFont(std::string filename, int size);
+		TTF_Font* get_font(const std::string &filename, int size);
 	};
 }

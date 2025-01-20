@@ -1,160 +1,157 @@
 #include "asset_manager.h"
 using namespace nashira;
 
-AssetManager* AssetManager::sInstance = NULL;
+AssetManager* AssetManager::s_instance = nullptr;
 
-AssetManager* AssetManager::Instance()
+AssetManager* AssetManager::instance()
 {
-	if (sInstance == NULL)
+	if (s_instance == nullptr)
 	{
-		sInstance = new AssetManager();
+		s_instance = new AssetManager();
 	}
 
-	return sInstance;
+	return s_instance;
 }
 
-void AssetManager::Release()
+void AssetManager::release()
 {
-	delete sInstance;
-	sInstance = NULL;
+	delete s_instance;
+	s_instance = nullptr;
 }
 
-AssetManager::AssetManager()
-{
-
-}
+AssetManager::AssetManager() = default;
 
 AssetManager::~AssetManager()
 {
-	for (auto tex : mTextures)
+	for (const auto &[fst, snd] : m_textures)
 	{
-		if (tex.second != NULL)
+		if (snd != nullptr)
 		{
-			SDL_DestroyTexture(tex.second);
+			SDL_DestroyTexture(snd);
 		}
 	}
-	mTextures.clear();
+	m_textures.clear();
 
-	for (auto text : mText)
+	for (const auto &[fst, snd] : m_text)
 	{
-		if (text.second != NULL)
+		if (snd != nullptr)
 		{
-			SDL_DestroyTexture(text.second);
-		}
-	}
-
-	mText.clear();
-
-	for (auto font : mFonts)
-	{
-		if (font.second != NULL)
-		{
-			TTF_CloseFont(font.second);
+			SDL_DestroyTexture(snd);
 		}
 	}
 
-	mFonts.clear();
+	m_text.clear();
 
-	for (auto music : mMusic)
+	for (const auto &[fst, snd] : m_fonts)
 	{
-		if (music.second != NULL)
+		if (snd != nullptr)
 		{
-			Mix_FreeMusic(music.second);
+			TTF_CloseFont(snd);
 		}
 	}
 
-	mMusic.clear();
+	m_fonts.clear();
 
-	for (auto sfx : mSFX)
+	for (const auto &[fst, snd] : m_music)
 	{
-		if (sfx.second != NULL)
+		if (snd != nullptr)
 		{
-			Mix_FreeChunk(sfx.second);
+			Mix_FreeMusic(snd);
 		}
 	}
 
-	mSFX.clear();
+	m_music.clear();
+
+	for (const auto &[fst, snd] : m_sfx)
+	{
+		if (snd != nullptr)
+		{
+			Mix_FreeChunk(snd);
+		}
+	}
+
+	m_sfx.clear();
 }
 
-SDL_Texture* AssetManager::GetTexture(std::string filename)
+SDL_Texture* AssetManager::get_texture(const std::string &filename)
 {
 	std::string fullPath = SDL_GetBasePath();
 	fullPath.append("Assets/" + filename);
 
-	if (mTextures[fullPath] == nullptr)
+	if (m_textures[fullPath] == nullptr)
 	{
-		mTextures[fullPath] = Graphics::Instance()->LoadTexture(fullPath);
+		m_textures[fullPath] = Graphics::instance()->load_texture(fullPath);
 	}
 
-	return mTextures[fullPath];
+	return m_textures[fullPath];
 }
 
-TTF_Font* AssetManager::GetFont(std::string filename, int size)
+TTF_Font* AssetManager::get_font(const std::string &filename, const int size)
 {
-	std::string fullPath = SDL_GetBasePath();
-	fullPath.append("Assets/" + filename);
-	std::string key = fullPath + (char)size;
+	std::string full_path = SDL_GetBasePath();
+	full_path.append("Assets/" + filename);
+	const std::string key = full_path + static_cast<char>(size);
 
-	if (mFonts[key] == nullptr)
+	if (m_fonts[key] == nullptr)
 	{
-		mFonts[key] = TTF_OpenFont(fullPath.c_str(), size);
+		m_fonts[key] = TTF_OpenFont(full_path.c_str(), size);
 
-		if (mFonts[key] == nullptr)
+		if (m_fonts[key] == nullptr)
 		{
 			printf("Font loading error: Font-%s Error-%s\n", filename.c_str(), TTF_GetError());
 		}
 	}
 
-	return mFonts[key];
+	return m_fonts[key];
 }
 
-SDL_Texture* AssetManager::GetText(std::string text, std::string filename, int size, SDL_Color color)
+SDL_Texture* AssetManager::get_text(const std::string &text, const std::string &filename, const int size, const SDL_Color color)
 {
-	TTF_Font* font = GetFont(filename, size);
+	TTF_Font* font = get_font(filename, size);
 
-	std::string key = text + filename + (char)size + (char)color.r + (char)color.g + (char)color.b;
+	const std::string key = text + filename + static_cast<char>(size) + static_cast<char>(color.r) + static_cast<char>(color.g) + static_cast<char>(color.b);
 	
-	if (mText[key] == nullptr)
+	if (m_text[key] == nullptr)
 	{
-		mText[key] = Graphics::Instance()->CreateTextTexture(font, text, color);
+		m_text[key] = Graphics::instance()->create_text_texture(font, text, color);
 	}
 
-	return mText[key];
+	return m_text[key];
 }
 
-Mix_Music* AssetManager::GetMusic(std::string filename)
+Mix_Music* AssetManager::get_music(const std::string &filename)
 {
 	std::string fullPath = SDL_GetBasePath();
 
 	fullPath.append("Assets/" + filename);
 
-	if (mMusic[fullPath] == nullptr)
+	if (m_music[fullPath] == nullptr)
 	{
-		mMusic[fullPath] = Mix_LoadMUS(fullPath.c_str());
-		if (mMusic[fullPath] == NULL)
+		m_music[fullPath] = Mix_LoadMUS(fullPath.c_str());
+		if (m_music[fullPath] == nullptr)
 		{
 			printf("Music loading error: Path:%s - Error:%s\n", fullPath.c_str(), Mix_GetError());
 		}
 	}
 
-	return mMusic[fullPath];
+	return m_music[fullPath];
 }
 
-Mix_Chunk* AssetManager::GetSFX(std::string filename)
+Mix_Chunk* AssetManager::get_sfx(const std::string &filename)
 {
 	std::string fullPath = SDL_GetBasePath();
 
 	fullPath.append("Assets/" + filename);
 
-	if (mSFX[fullPath] == nullptr)
+	if (m_sfx[fullPath] == nullptr)
 	{
-		mSFX[fullPath] = Mix_LoadWAV(fullPath.c_str());
+		m_sfx[fullPath] = Mix_LoadWAV(fullPath.c_str());
 
-		if (mSFX[fullPath] == NULL)
+		if (m_sfx[fullPath] == nullptr)
 		{
 			printf("Failed on load sound effect at path %s, error %s\n", fullPath.c_str(), Mix_GetError());
 		}
 	}
 
-	return mSFX[fullPath];
+	return m_sfx[fullPath];
 }

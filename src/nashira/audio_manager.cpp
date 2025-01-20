@@ -1,62 +1,50 @@
 #include "audio_manager.h"
 using namespace nashira;
 
-AudioManager* AudioManager::sInstance = NULL;
+AudioManager *AudioManager::s_instance = nullptr;
 
-AudioManager* AudioManager::Instance()
-{
-	if (sInstance == NULL)
-	{
-		sInstance = new AudioManager();
-	}
+AudioManager *AudioManager::instance() {
+    if (s_instance == nullptr) {
+        s_instance = new AudioManager();
+    }
 
-	return sInstance;
+    return s_instance;
 }
 
-void AudioManager::Release()
-{
-	delete sInstance;
-	sInstance = NULL;
+void AudioManager::release() {
+    delete s_instance;
+    s_instance = nullptr;
 }
 
-AudioManager::AudioManager()
-{
-	mAssetManager = AssetManager::Instance();
+AudioManager::AudioManager() {
+    m_asset_manager = AssetManager::instance();
 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) < 0)
-	{
-		printf("Mixer initialization error: %s\n", Mix_GetError());
-	}
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) < 0) {
+        printf("Mixer initialization error: %s\n", Mix_GetError());
+    }
 }
 
-AudioManager::~AudioManager()
-{
-	mAssetManager = NULL;
-	Mix_Quit();
+AudioManager::~AudioManager() {
+    m_asset_manager = nullptr;
+    Mix_Quit();
 }
 
-void AudioManager::PlayMusic(std::string filename, int loops)
-{
-	Mix_PlayMusic(mAssetManager->GetMusic(filename), loops);
+void AudioManager::play_music(const std::string &filename, const int loops) const {
+    Mix_PlayMusic(m_asset_manager->get_music(filename), loops);
 }
 
-void AudioManager::PauseMusic()
-{
-	if (Mix_PlayingMusic() != 0)
-	{
-		Mix_PauseMusic();
-	}
+void AudioManager::pause_music() {
+    if (Mix_PlayingMusic() != 0) {
+        Mix_PauseMusic();
+    }
 }
 
-void AudioManager::ResumeMusic()
-{
-	if (Mix_PausedMusic() != 0)
-	{
-		Mix_ResumeMusic();
-	}
+void AudioManager::resume_music() {
+    if (Mix_PausedMusic() != 0) {
+        Mix_ResumeMusic();
+    }
 }
 
-void AudioManager::PlaySFX(std::string filename, int loops, int channel)
-{
-	Mix_PlayChannel(channel, mAssetManager->GetSFX(filename), loops);
+void AudioManager::play_sfx(const std::string &filename, const int loops, const int channel) const {
+    Mix_PlayChannel(channel, m_asset_manager->get_sfx(filename), loops);
 }

@@ -9,44 +9,45 @@ namespace nashira {
 
 		enum SPACE
 		{
-			local = 0,
-			world = 1
+			LOCAL,
+			WORLD
 		};
 
 		float mRotation;
 
 	private:
 
-		Vector2 mPos;
-		Vector2 mScale;
+		Vector2 m_pos;
+		Vector2 m_scale;
 
 		bool mActive;
-		GameEntity* mParent;
+		GameEntity* m_parent;
 
 	public:
 
 		GameEntity(float x = 0.0f, float y = 0.0f);
-		~GameEntity();
 
-		void Pos(Vector2 pos);
-		Vector2 Pos(SPACE space = world);
+		virtual ~GameEntity();
+
+		void set_position(Vector2 position);
+		Vector2 get_position(SPACE space = WORLD) const;
 
 		void Rotation(float rotation);
-		float Rotation(SPACE space = world);
+		float Rotation(SPACE space = WORLD);
 
 		void Scale(Vector2 scale);
-		Vector2 Scale(SPACE space = world);
+		Vector2 Scale(SPACE space = WORLD);
 
 		void Active(bool active);
 		bool Active();
 
-		void Parent(GameEntity* parent);
-		GameEntity* Parent();
+		void parent(GameEntity* parent);
+		GameEntity* parent();
 
 		void Translate(Vector2 vec);
 		void Rotate(float amount);
 
-		virtual void Update();
-		virtual void Render();
+		virtual void update();
+		virtual void render();
 	};
 }

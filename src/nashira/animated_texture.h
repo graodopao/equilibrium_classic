@@ -1,6 +1,6 @@
 #pragma once
-#include "timer.h";
-#include "texture.h";
+#include "timer.h"
+#include "texture.h"
 
 namespace nashira {
 	class AnimatedTexture final : public Texture
@@ -40,12 +40,12 @@ namespace nashira {
 		AnimatedTexture(std::string filename, int x, int y, int w, int h, int frame_count, float animation_speed, ANIM_DIR animation_direction);
 		~AnimatedTexture() override;
 
-		void WrapMode(WRAP_MODE mode);
+		void wrap_mode(WRAP_MODE mode);
 
-		void Update() override;
+		void update() override;
 
-		void setSpeed(float mAnimationSpeed);
-		void setFrame(float frame);
+		void set_speed(float mAnimationSpeed);
+		void set_frame(float frame);
 
 	};
 }

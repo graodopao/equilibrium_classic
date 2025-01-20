@@ -7,57 +7,57 @@ namespace nashira {
 	class Texture : public GameEntity
 	{
 	protected:
-		SDL_Texture* mTex;
-		Texture* secondTexture = NULL;
+		SDL_Texture* m_tex;
+		Texture* second_texture = nullptr;
 
-		Graphics* mGraphics;
-		Timer* mTimer;
+		Graphics* m_graphics;
+		Timer* m_timer = nullptr;
 
 		int m_width;
 		int m_height;
 
-		bool mClipped;
-		SDL_Rect mRenderRect;
+		bool m_clipped;
+		SDL_Rect m_render_rect;
 		SDL_Rect m_clip_rect;
 
 		Uint8 alpha = 1;
 
-		float riseCooldown = 120.0f;
-		float riseTick = 0.0f;
+		float rise_cooldown = 120.0f;
+		float rise_tick = 0.0f;
 
 		int* objective_variable = nullptr;
 
 	public:
+		static float rotate_point(Vector2 pos, float dist, float dir);
 
-		float RotatePoint(Vector2 pos, float dist, float dir);
-
-		Texture(std::string filename);
+		explicit Texture(std::string filename);
 		Texture(std::string filename, int x, int y, int w, int h);
-		Texture(std::string text, std::string fontpath, int size, SDL_Color);
+		Texture(const std::string &text, const std::string &font_path, int size, SDL_Color);
 
-		float buildingUpdate(float deltaTime, float angle, float leftPoint, float rightPoint, int& objective, int& objectice_term);
-		void SetAlpha(Uint8 alpha);
+		float building_update(float delta_time, float angle, float leftPoint, float rightPoint, int& objective, int& objective_term);
+		void set_alpha(Uint8 alpha) const;
 
-		void particleUpdate(float deltaTime);
+		void particle_update(float deltaTime);
 
-		virtual ~Texture();
+		~Texture() override;
 
-		float GetWidth();
-		float GetHeight();
+		int get_width() const;
 
-		virtual void Render();
+		int get_height() const;
 
-		void Rise(float amount, float cap);
-		void Unrise(float amount);
+		void render() override;
 
-		void setBuilding(Texture* frameTexture, int maximumHeight, bool isFrame, float constructionCooldown);
-		void buildingDemolish();
+		void rise(int amount, float cap);
+		void decrease(int amount);
 
-		bool isDemolished();
+		void set_building(Texture* frameTexture, int maximumHeight, bool isFrame, float constructionCooldown);
+		void building_demolish();
+
+		bool is_demolished() const;
 
 	private:
 
-		enum buildingState
+		enum BUILDING_STATE
 		{
 			building,
 			built,
@@ -66,23 +66,23 @@ namespace nashira {
 			falling
 		};
 
-		buildingState currentBuildingState = building;
+		BUILDING_STATE current_building_state = building;
 
 
-		int maxHeight = 50;
-		bool isBuilding = false;
+		int max_height = 50;
+		bool is_building = false;
 
 		const float gravity = 10.0f;
-		float vspd = 0.0f;
+		float vertical_speed = 0.0f;
 
-		float particleMoveUpdate = 60.0f;
-		float particleTick = 0;
+		float particle_move_update = 60.0f;
+		float particle_tick = 0;
 
-		float horizontalParticleMoveUpdate = 120.0f;
-		float horizontalParticleTick = 0;
+		float horizontal_particle_move_update = 120.0f;
+		float horizontal_particle_tick = 0;
 
-		float buildingIdleCooldown = 0.0f;
-		float buildingIdleTick = 0.0f;
+		float building_idle_cooldown = 0.0f;
+		float building_idle_tick = 0.0f;
 
 	};
 }

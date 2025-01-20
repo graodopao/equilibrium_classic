@@ -5,18 +5,20 @@ namespace nashira {
 	class AudioManager
 	{
 	private:
-		static AudioManager* sInstance;
-		AssetManager* mAssetManager;
+		static AudioManager* s_instance;
+		AssetManager* m_asset_manager;
 	public:
 
-		static AudioManager* Instance();
-		static void Release();
+		static AudioManager* instance();
+		static void release();
 
-		void PlayMusic(std::string filename, int loops = -1);
-		void PauseMusic();
-		void ResumeMusic();
+		void play_music(const std::string &filename, int loops = -1) const;
 
-		void PlaySFX(std::string filename, int loops = false, int channel = 0);
+		static void pause_music();
+
+		static void resume_music();
+
+		void play_sfx(const std::string &filename, int loops = false, int channel = 0) const;
 
 	private:
 

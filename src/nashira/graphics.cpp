@@ -1,53 +1,54 @@
-#include "graphics.h";
+#include "graphics.h"
+#include <SDL_image.h>
 using namespace nashira;
 
-Graphics* Graphics::sInstance = NULL;
-bool Graphics::sInitialized = false;
 
-Graphics* Graphics::Instance()
+Graphics* Graphics::s_instance = nullptr;
+bool Graphics::s_initialized = false;
+
+Graphics* Graphics::instance()
 {
-	if (sInstance == NULL)
+	if (s_instance == nullptr)
 	{
-		sInstance = new Graphics;
+		s_instance = new Graphics;
 	}
 
-	return sInstance;
+	return s_instance;
 }
 
-void Graphics::Release()
+void Graphics::release()
 {
-	delete sInstance;
-	sInstance = NULL;
+	delete s_instance;
+	s_instance = nullptr;
 
-	sInitialized = false;
+	s_initialized = false;
 }
 
-bool Graphics::Initialized()
+bool Graphics::initialized()
 {
-	return sInitialized;
+	return s_initialized;
 }
 
 Graphics::Graphics()
 {
-	mBackbuffer = NULL;
-
-	sInitialized = Init();
+	m_back_buffer = nullptr;
+	s_initialized = init();
 }
 
 Graphics::~Graphics()
 {
-	SDL_DestroyWindow(mWindow);
-	mWindow = NULL;
+	SDL_DestroyWindow(m_window);
+	m_window = nullptr;
 	
 	SDL_DestroyRenderer(mRenderer);
-	mRenderer = NULL;
+	mRenderer = nullptr;
 
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
 
-bool Graphics::Init()
+bool Graphics::init()
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
@@ -55,16 +56,16 @@ bool Graphics::Init()
 		return false;
 	}
 
-	mWindow = SDL_CreateWindow("The Balance", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	m_window = SDL_CreateWindow("The Balance", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
-	if (mWindow == NULL)
+	if (m_window == nullptr)
 	{
 		printf("SDL_WindowCreationError: %s\n", SDL_GetError());
 		return false;
 	}
 
-	mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
-	if (mRenderer == NULL)
+	mRenderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+	if (mRenderer == nullptr)
 	{
 		printf("Renderer failed to create: %s\n", SDL_GetError());
 		return false;
@@ -72,7 +73,7 @@ bool Graphics::Init()
 
 	SDL_SetRenderDrawColor(mRenderer, 2, 8, 13, 255);
 
-	int flags = IMG_INIT_PNG;
+	const int flags = IMG_INIT_PNG;
 	if (!(IMG_Init(flags) & flags))
 	{
 		printf("IMG Initialization error: %s\n", IMG_GetError());
@@ -85,11 +86,11 @@ bool Graphics::Init()
 		return false;
 	}
 
-	mBackbuffer = SDL_GetWindowSurface(mWindow);
+	m_back_buffer = SDL_GetWindowSurface(m_window);
 	return true;
 }
 
-SDL_Texture* Graphics::LoadTexture(std::string path)
+SDL_Texture* Graphics::load_texture(std::string path)
 {
 	SDL_Texture* tex = NULL;
 
@@ -115,7 +116,7 @@ SDL_Texture* Graphics::LoadTexture(std::string path)
 	return tex;
 }
 
-SDL_Texture* Graphics::CreateTextTexture(TTF_Font* font, std::string text, SDL_Color color)
+SDL_Texture* Graphics::create_text_texture(TTF_Font* font, std::string text, SDL_Color color)
 {
 	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
 
@@ -139,17 +140,17 @@ SDL_Texture* Graphics::CreateTextTexture(TTF_Font* font, std::string text, SDL_C
 	return tex;
 }
 
-void Graphics::ClearBackBuffer()
+void Graphics::clear_back_buffer()
 {
 	SDL_RenderClear(mRenderer);
 }
 
-void Graphics::DrawTexture(SDL_Texture* tex, SDL_Rect* clip, SDL_Rect* rend, float angle, SDL_RendererFlip flip)
+void Graphics::draw_texture(SDL_Texture* tex, SDL_Rect* clip, SDL_Rect* rend, float angle, SDL_RendererFlip flip)
 {
 	SDL_RenderCopyEx(mRenderer, tex, clip, rend, angle, NULL, flip);
 }
 
-void Graphics::Render()
+void Graphics::render()
 {
 	SDL_RenderPresent(mRenderer);
 }

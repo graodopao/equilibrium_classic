@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AnimatedTexture.h"
+#include "animated_texture.h"
 #include "input_manager.h"
 #include "audio_manager.h"
 #include <vector>
@@ -81,7 +81,7 @@ namespace nashira {
 		float mButtonOneXPos = Graphics::SCREEN_WIDTH * 0.15f;
 		float mButtonTwoXPos = Graphics::SCREEN_WIDTH * 0.85f;
 
-		Vector2 mWeightBalance = VEC2_ZERO;
+		Vector2 mWeightBalance = ZERO;
 
 		static GameManager* Instance();
 		static void Release();

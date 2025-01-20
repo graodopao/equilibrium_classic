@@ -19,9 +19,6 @@ file(GLOB SOURCES
         "src/*.h"
         "src/*.hpp"
         "src/*.cpp"
-        "*.h"
-        "*.hpp"
-        "*.cpp"
 )
 
 add_executable(Equilibrium ${SOURCES})

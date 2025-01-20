@@ -1,6 +1,4 @@
 #include "game_manager.h"
-
-
 using namespace nashira;
 
 GameManager* GameManager::sInstance = NULL;
@@ -25,66 +23,66 @@ GameManager::GameManager()
 {
 	mQuit = false;
 
-	mGraphics = Graphics::Instance();
+	mGraphics = Graphics::instance();
 
-	if (!Graphics::Initialized)
+	if (!Graphics::initialized)
 	{
 		mQuit = true;
 	}
 
-	mAssetManager = AssetManager::Instance();
+	mAssetManager = AssetManager::instance();
 
 	mInputManager = InputManager::Instance();
 
-	mAudioManager = AudioManager::Instance();
+	mAudioManager = AudioManager::instance();
 
-	mTimer = Timer::Instance();
+	mTimer = Timer::instance();
 
 	std::string s = std::to_string(completed_objectives);
 	s.append("/");
 	s.append(std::to_string(current_objective));
 
 	mScore = new Texture(s, "Simplifica.ttf", 50, {255, 255, 255});
-	mScore->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.2));
+	mScore->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.2));
 
 	gameOverText = new Texture("PRESS SPACE TO RETRY", "Simplifica.ttf", 100, {255, 255, 255});
-	gameOverText->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
-	gameOverText->SetAlpha(0);
+	gameOverText->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
+	gameOverText->set_alpha(0);
 
 	playerScore = new Texture("0", "Simplifica.ttf", 20, {255, 255, 255});
-	playerScore->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.1));
+	playerScore->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.1));
 
 	mButtonOne = new Texture("ButtonFlip.png", 0, 0, 204, 463);
-	mButtonOne->Pos(Vector2(mButtonOneXPos, buttonHeight));
+	mButtonOne->set_position(Vector2(mButtonOneXPos, buttonHeight));
 
 	mButtonOnePressed = new Texture("ButtonFlippressed.png", 0, 0, 204, 463);
-	mButtonOnePressed->Pos(Vector2(mButtonOneXPos, buttonHeight));
+	mButtonOnePressed->set_position(Vector2(mButtonOneXPos, buttonHeight));
 
 	mButtonTwo = new Texture("Button.png", 0, 0, 204, 463);
-	mButtonTwo->Pos(Vector2(mButtonTwoXPos, buttonHeight));
+	mButtonTwo->set_position(Vector2(mButtonTwoXPos, buttonHeight));
 
 	mButtonTwoPressed = new Texture("Buttonpressed.png", 0, 0, 204, 463);
-	mButtonTwoPressed->Pos(Vector2(mButtonTwoXPos, buttonHeight));
+	mButtonTwoPressed->set_position(Vector2(mButtonTwoXPos, buttonHeight));
 
 	mMiddlePole = new Texture("Middle pole.png", 0, 0, 25, 360);
-	mMiddlePole->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.85f));
+	mMiddlePole->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.85f));
 
 	mPlate = new Texture("Plate.png", 0, 0, 600, 25);
-	mPlate->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2 + 85));
+	mPlate->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2 + 85));
 
 	mBlack = new Texture("Black.png", 0, 0, 1280, 720);
-	mBlack->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
+	mBlack->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 
 	mLights = new Texture("Lights.png", 0, 0, 1280, 720);
-	mLights->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
+	mLights->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 
 	srand(time(NULL));
 
 	for (int i = 0; i < 26; i++)
 	{
 		Texture* temp = new Texture("Lightdot.png", 0, 0, 5, 5);
-		temp->Pos(Vector2(Graphics::SCREEN_WIDTH / 2 + 42 + (10 * i), Graphics::SCREEN_HEIGHT / 2 + 90));
-		temp->Parent(mPlate);
+		temp->set_position(Vector2(Graphics::SCREEN_WIDTH / 2 + 42 + (10 * i), Graphics::SCREEN_HEIGHT / 2 + 90));
+		temp->parent(mPlate);
 
 		lightDotsRight.push_back(temp);
 	}
@@ -92,8 +90,8 @@ GameManager::GameManager()
 	for (int i = 0; i < 26; i++)
 	{
 		Texture* temp = new Texture("Lightdot.png", 0, 0, 5, 5);
-		temp->Pos(Vector2(Graphics::SCREEN_WIDTH / 2 - 42 - (10 * i), Graphics::SCREEN_HEIGHT / 2 + 90));
-		temp->Parent(mPlate);
+		temp->set_position(Vector2(Graphics::SCREEN_WIDTH / 2 - 42 - (10 * i), Graphics::SCREEN_HEIGHT / 2 + 90));
+		temp->parent(mPlate);
 
 		lightDotsLeft.push_back(temp);
 	}
@@ -105,33 +103,33 @@ GameManager::GameManager()
 
 		Texture* temp = new Texture("Particle.png", 0, 0, 5, 5);
 
-		temp->SetAlpha(100);
-		temp->Pos(Vector2(_x, _y));
+		temp->set_alpha(100);
+		temp->set_position(Vector2(_x, _y));
 
 		particles.push_back(temp);
 	}
 
 	newLevel();
 
-	mAudioManager->PlayMusic("Background.wav");
+	mAudioManager->play_music("Background.wav");
 
 }
 
 GameManager::~GameManager()
 {
-	AssetManager::Release();
+	AssetManager::release();
 	mAssetManager = NULL;
 
-	Graphics::Release();
+	Graphics::release();
 	mGraphics = NULL;
 
-	Timer::Release();
+	Timer::release();
 	mTimer = NULL;
 
 	InputManager::Release();
 	mInputManager = NULL;
 
-	AudioManager::Release();
+	AudioManager::release();
 	mAudioManager = NULL;
 
 	delete mButtonOne;
@@ -199,7 +197,7 @@ GameManager::~GameManager()
 
 void GameManager::EarlyUpdate()
 {
-	mTimer->Reset();
+	mTimer->reset();
 	mInputManager->Update();
 }
 
@@ -208,7 +206,7 @@ void GameManager::Update()
 {
 	for (Texture* i : particles)
 	{
-		i->particleUpdate(mTimer->DeltaTime());
+		i->particle_update(mTimer->delta_time());
 	}
 
 	buttonOnePressed = false;
@@ -219,22 +217,22 @@ void GameManager::Update()
 
 		bool isPressed = mInputManager->MouseButtonPressed(InputManager::left);
 
-		if (mInputManager->MouseIsInArea(mButtonOneXPos - mButtonOne->GetWidth() / 2, buttonHeight - mButtonOne->GetHeight() / 2, mButtonOneXPos + mButtonOne->GetWidth() / 2, buttonHeight + mButtonOne->GetHeight() / 2))
+		if (mInputManager->MouseIsInArea(mButtonOneXPos - mButtonOne->get_width() / 2, buttonHeight - mButtonOne->get_height() / 2, mButtonOneXPos + mButtonOne->get_width() / 2, buttonHeight + mButtonOne->get_height() / 2))
 		{
 			if (isPressed)
 			{
-				mAudioManager->PlaySFX("Button.wav");
+				mAudioManager->play_sfx("Button.wav");
 			}
 
 			buttonOnePressed = true;
 		}
 
 		// Button two
-		if (mInputManager->MouseIsInArea(mButtonTwoXPos - mButtonTwo->GetWidth() / 2, buttonHeight - mButtonTwo->GetHeight() / 2, mButtonTwoXPos + mButtonTwo->GetWidth() / 2, buttonHeight + mButtonTwo->GetHeight() / 2))
+		if (mInputManager->MouseIsInArea(mButtonTwoXPos - mButtonTwo->get_width() / 2, buttonHeight - mButtonTwo->get_height() / 2, mButtonTwoXPos + mButtonTwo->get_width() / 2, buttonHeight + mButtonTwo->get_height() / 2))
 		{
 			if (isPressed)
 			{
-				mAudioManager->PlaySFX("Button.wav");
+				mAudioManager->play_sfx("Button.wav");
 			}
 
 			buttonTwoPressed = true;
@@ -245,37 +243,37 @@ void GameManager::Update()
 			buttonPressTick = 0;
 
 			// Button one
-			if (mInputManager->MouseIsInArea(mButtonOneXPos - mButtonOne->GetWidth() / 2, buttonHeight - mButtonOne->GetHeight() / 2, mButtonOneXPos + mButtonOne->GetWidth() / 2, buttonHeight + mButtonOne->GetHeight() / 2))
+			if (mInputManager->MouseIsInArea(mButtonOneXPos - mButtonOne->get_width() / 2, buttonHeight - mButtonOne->get_height() / 2, mButtonOneXPos + mButtonOne->get_width() / 2, buttonHeight + mButtonOne->get_height() / 2))
 			{
 				platformWeight -= balanceChangeForce;
 			}
 
 			// Button two
-			if (mInputManager->MouseIsInArea(mButtonTwoXPos - mButtonTwo->GetWidth() / 2, buttonHeight - mButtonTwo->GetHeight() / 2, mButtonTwoXPos + mButtonTwo->GetWidth() / 2, buttonHeight + mButtonTwo->GetHeight() / 2))
+			if (mInputManager->MouseIsInArea(mButtonTwoXPos - mButtonTwo->get_width() / 2, buttonHeight - mButtonTwo->get_height() / 2, mButtonTwoXPos + mButtonTwo->get_width() / 2, buttonHeight + mButtonTwo->get_height() / 2))
 			{
 				platformWeight += balanceChangeForce;
 			}
 		}
 		else
 		{
-			buttonPressTick += 240 * mTimer->DeltaTime();
+			buttonPressTick += 240 * mTimer->delta_time();
 		}
 	}
 
-	float _rx = mPlate->RotatePoint(mPlate->Pos(), mPlate->GetWidth() / 2, mPlate->Rotation());
-	float _lx = mPlate->RotatePoint(mPlate->Pos(), -mPlate->GetWidth() / 2, mPlate->Rotation());
+	float _rx = mPlate->rotate_point(mPlate->get_position(), mPlate->get_width() / 2, mPlate->Rotation());
+	float _lx = mPlate->rotate_point(mPlate->get_position(), -mPlate->get_width() / 2, mPlate->Rotation());
 
-	mWeightBalance = VEC2_ZERO;
+	mWeightBalance = ZERO;
 
 	if (!finishedRound && !lost)
 	{
 		for (Texture* i : constructions)
 		{
-			float resultWeight = i->buildingUpdate(mTimer->DeltaTime(), mPlate->mRotation, _lx, _rx, completed_objectives, objectives_terminated);
+			float resultWeight = i->building_update(mTimer->delta_time(), mPlate->mRotation, _lx, _rx, completed_objectives, objectives_terminated);
 
-			float _x = i->Pos().x;
+			float _x = i->get_position().x;
 
-			if (i->Pos().x > Graphics::SCREEN_WIDTH / 2)
+			if (i->get_position().x > Graphics::SCREEN_WIDTH / 2)
 			{
 				float result = (_x / _rx - 0.5f) / 6;
 
@@ -303,7 +301,7 @@ void GameManager::Update()
 			std::string s = std::to_string(current_score);
 
 			playerScore = new Texture(s, "Simplifica.ttf", 20, { 255, 255, 255 });
-			playerScore->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.1));
+			playerScore->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.1));
 		}
 		else
 		{
@@ -318,7 +316,7 @@ void GameManager::Update()
 
 	if (!finishedRound && !lost)
 	{
-		mPlate->Rotate(finalResult * mTimer->DeltaTime());
+		mPlate->Rotate(finalResult * mTimer->delta_time());
 	}
 
 	mPlate->mRotation = SDL_clamp(mPlate->mRotation, -60, 60);
@@ -328,11 +326,11 @@ void GameManager::Update()
 		finishedRound = true;
 	}
 
-	alpha += (((finishedRound || lost) ? 250 : 0 - alpha) / 1.5) * mTimer->DeltaTime();
+	alpha += (((finishedRound || lost) ? 250 : 0 - alpha) / 1.5) * mTimer->delta_time();
 	alpha = SDL_clamp(alpha, 0, 255);
 
-	mBlack->SetAlpha(alpha);
-	gameOverText->SetAlpha(alpha);
+	mBlack->set_alpha(alpha);
+	gameOverText->set_alpha(alpha);
 
 	if (alpha >= 250 && finishedRound)
 	{
@@ -390,17 +388,17 @@ void GameManager::newLevel()
 		name.append(std::to_string(b));
 
 		Texture* frameTemp = new Texture(name + "-frame.png", 0, 0, 50, 5);
-		frameTemp->Pos(Vector2(Graphics::SCREEN_WIDTH / 2 + _x - 250, Graphics::SCREEN_HEIGHT / 2 + 70));
-		frameTemp->Parent(mPlate);
+		frameTemp->set_position(Vector2(Graphics::SCREEN_WIDTH / 2 + _x - 250, Graphics::SCREEN_HEIGHT / 2 + 70));
+		frameTemp->parent(mPlate);
 
 		Texture* temp = new Texture(name + ".png", 0, 0, 50, 0);
-		temp->Pos(Vector2(Graphics::SCREEN_WIDTH / 2 + _x - 250, Graphics::SCREEN_HEIGHT / 2 + 70));
+		temp->set_position(Vector2(Graphics::SCREEN_WIDTH / 2 + _x - 250, Graphics::SCREEN_HEIGHT / 2 + 70));
 
 		float cooldown = rand() % 500 + 1;
 		printf("%f\n", cooldown);
 
-		temp->setBuilding(frameTemp, 50, false, cooldown);
-		temp->Parent(mPlate);
+		temp->set_building(frameTemp, 50, false, cooldown);
+		temp->parent(mPlate);
 
 		constructions.push_back(temp);
 	}
@@ -416,7 +414,7 @@ void GameManager::updateScore()
 	s.append(std::to_string(current_objective));
 
 	mScore = new Texture(s, "Simplifica.ttf", 50, { 255, 255, 255 });
-	mScore->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.2));
+	mScore->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.2));
 }
 
 void GameManager::LateUpdate()
@@ -427,40 +425,40 @@ void GameManager::LateUpdate()
 void GameManager::Render()
 {
 
-	mGraphics->ClearBackBuffer();
+	mGraphics->clear_back_buffer();
 
 
 	for (Texture* i : particles)
 	{
-		i->Render();
+		i->render();
 	}
 
 	if (!buttonOnePressed)
 	{
-		mButtonOne->Render();
+		mButtonOne->render();
 	}
 	else
 	{
-		mButtonOnePressed->Render();
+		mButtonOnePressed->render();
 	}
 
 	if (!buttonTwoPressed)
 	{
-		mButtonTwo->Render();
+		mButtonTwo->render();
 	}
 	else
 	{
-		mButtonTwoPressed->Render();
+		mButtonTwoPressed->render();
 	}
 
-	mPlate->Render();
-	mMiddlePole->Render();
+	mPlate->render();
+	mMiddlePole->render();
 
 	int count = 0;
 
 	for (Texture* i : constructions)
 	{
-		i->Render();
+		i->render();
 	}
 
 	count = 0;
@@ -468,7 +466,7 @@ void GameManager::Render()
 	{
 		if (count < max_chances)
 		{
-			i->Render();
+			i->render();
 			count++;
 		}
 	}
@@ -478,32 +476,32 @@ void GameManager::Render()
 	{
 		if (count < max_chances)
 		{
-			i->Render();
+			i->render();
 			count++;
 		}
 	}
 
-	mScore->Render();
-	playerScore->Render();
+	mScore->render();
+	playerScore->render();
 
-	mLights->Update();
-	mLights->Render();
+	mLights->update();
+	mLights->render();
 
-	mBlack->Render();
+	mBlack->render();
 
 	if (lost)
 	{
-		gameOverText->Render();
+		gameOverText->render();
 	}
 
-	mGraphics->Render();
+	mGraphics->render();
 }
 
 void GameManager::Run()
 {
 	while (!mQuit)
 	{
-		mTimer->Update();
+		mTimer->update();
 
 		while (SDL_PollEvent(&mEvents) != 0)
 		{
@@ -513,7 +511,7 @@ void GameManager::Run()
 			}
 		}
 
-		if (mTimer->DeltaTime() >= 1.0f / FRAME_RATE)
+		if (mTimer->delta_time() >= 1.0f / FRAME_RATE)
 		{
 			EarlyUpdate();
 			Update();

@@ -3,10 +3,10 @@
 #include <utility>
 using namespace nashira;
 
-AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int w, int h, int frame_count, float animation_speed, ANIM_DIR animationDir)
+AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int w, int h, int frame_count, float animation_speed, ANIM_DIR animation_direction)
 	: Texture(std::move(filename), x, y, w, h)
 {
-	m_timer = Timer::Instance();
+	m_timer = Timer::instance();
 
 	m_start_x = x;
 	m_start_y = y;
@@ -16,7 +16,7 @@ AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int w, int 
 	m_time_per_frame = m_animation_speed / static_cast<float>(m_frame_count);
 	m_animation_timer = 0.0f;
 
-	m_animation_direction = animationDir;
+	m_animation_direction = animation_direction;
 
 	m_animation_done = false;
 
@@ -25,27 +25,27 @@ AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int w, int 
 
 AnimatedTexture::~AnimatedTexture()= default;
 
-void AnimatedTexture::WrapMode(WRAP_MODE mode)
+void AnimatedTexture::wrap_mode(const WRAP_MODE mode)
 {
 	m_wrap_mode = mode;
 }
 
-void AnimatedTexture::setSpeed(float animationSpeed)
+void AnimatedTexture::set_speed(const float animationSpeed)
 {
 	m_animation_speed = animationSpeed;
 }
 
-void AnimatedTexture::setFrame(float timer)
+void AnimatedTexture::set_frame(float timer)
 {
 	m_animation_timer = timer;
 	m_animation_done = false;
 }
 
-void AnimatedTexture::Update()
+void AnimatedTexture::update()
 {
 	if (!m_animation_done)
 	{
-		m_animation_timer += m_timer->DeltaTime();
+		m_animation_timer += m_timer->delta_time();
 
 		if (m_animation_timer >= m_animation_speed)
 		{

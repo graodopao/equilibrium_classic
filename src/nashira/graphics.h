@@ -1,48 +1,46 @@
 #pragma once
 
-#include <SDL.h>;
-#include <SDL_image.h>
+#include <SDL.h>
 #include <SDL_ttf.h>
-#include <stdio.h>;
 #include <string>
 
 namespace nashira {
 	class Graphics
 	{
 	public:
-		static const int SCREEN_WIDTH = 1280;
-		static const int SCREEN_HEIGHT = 720;
+		static constexpr int SCREEN_WIDTH = 1280;
+		static constexpr int SCREEN_HEIGHT = 720;
 
 	private:
 
-		static Graphics* sInstance;
-		static bool sInitialized;
+		static Graphics* s_instance;
+		static bool s_initialized;
 
-		SDL_Window* mWindow;
-		SDL_Surface* mBackbuffer;
+		SDL_Window* m_window;
+		SDL_Surface* m_back_buffer;
 
 		SDL_Renderer* mRenderer;
 
 
 	public:
-		static Graphics* Instance();
-		static void Release();
-		static bool Initialized();
+		static Graphics* instance();
+		static void release();
+		static bool initialized();
 
-		SDL_Texture* LoadTexture(std::string path);
-		SDL_Texture* CreateTextTexture(TTF_Font* font, std::string text, SDL_Color color);
+		SDL_Texture* load_texture(std::string path);
+		SDL_Texture* create_text_texture(TTF_Font* font, std::string text, SDL_Color color);
 
-		void ClearBackBuffer();
+		void clear_back_buffer();
 
-		void DrawTexture(SDL_Texture* tex, SDL_Rect* clip = NULL, SDL_Rect* rend = NULL, float angle = 0.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void draw_texture(SDL_Texture* tex, SDL_Rect* clip = nullptr, SDL_Rect* rend = nullptr, float angle = 0.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-		void Render();
+		void render();
 
 	private:
 
 		Graphics();
 		~Graphics();
 
-		bool Init();
+		bool init();
 	};
 }
