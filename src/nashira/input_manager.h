@@ -20,39 +20,39 @@ namespace nashira {
 
 	private:
 
-		static InputManager* sInstance;
+		static InputManager* s_instance;
 
 
-		Uint8* mPrevKeyboardState;
-		const Uint8* mKeyboardState;
-		int mKeyLength;
+		Uint8* m_prev_keyboard_state;
+		const Uint8* m_keyboard_state;
+		int m_key_length;
 
-		Uint32 mPrevMouseState;
-		Uint32 mMouseState;
+		Uint32 m_prev_mouse_state;
+		Uint32 m_mouse_state;
 
-		int mMouseXPos;
-		int mMouseYPos;
+		int m_mouse_x_pos;
+		int m_mouse_y_pos;
 
 	public:
 
-		static InputManager* Instance();
-		static void Release();
+		static InputManager* instance();
+		static void release();
 
-		bool KeyDown(SDL_Scancode scanCode);
-		bool KeyPressed(SDL_Scancode scanCode);
-		bool KeyReleased(SDL_Scancode scanCode);
+		bool key_down(SDL_Scancode scan_code) const;
+		bool key_pressed(SDL_Scancode scan_code) const;
+		bool key_released(SDL_Scancode scan_code) const;
 
-		bool MouseButtonDown(MOUSE_BUTTONS button);
-		bool MouseButtonPressed(MOUSE_BUTTONS button);
-		bool MouseButtonReleased(MOUSE_BUTTONS button);
+		bool mouse_button_down(MOUSE_BUTTONS button) const;
+		bool mouse_button_pressed(MOUSE_BUTTONS button) const;
+		bool mouse_button_released(MOUSE_BUTTONS button) const;
 
-		bool MouseIsInArea(int x1, int y1, int x2, int y2);
+		bool mouse_is_in_area(int x1, int y1, int x2, int y2) const;
 
-		Vector2 MouseGetPos();
+		Vector2 mouse_get_pos() const;
 
-		void UpdatePreviousInput();
+		void update_previous_input();
 
-		void Update();
+		void update();
 
 	private:
 

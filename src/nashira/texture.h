@@ -41,9 +41,8 @@ namespace nashira {
 
 		~Texture() override;
 
-		int get_width() const;
-
-		int get_height() const;
+		[[nodiscard]] int get_width() const;
+		[[nodiscard]] int get_height() const;
 
 		void render() override;
 
@@ -53,7 +52,7 @@ namespace nashira {
 		void set_building(Texture* frameTexture, int maximumHeight, bool isFrame, float constructionCooldown);
 		void building_demolish();
 
-		bool is_demolished() const;
+		[[nodiscard]] bool is_demolished() const;
 
 	private:
 

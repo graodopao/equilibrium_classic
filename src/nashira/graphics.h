@@ -27,14 +27,14 @@ namespace nashira {
 		static void release();
 		static bool initialized();
 
-		SDL_Texture* load_texture(std::string path);
-		SDL_Texture* create_text_texture(TTF_Font* font, std::string text, SDL_Color color);
+		SDL_Texture* load_texture(const std::string &path) const;
+		SDL_Texture* create_text_texture(TTF_Font* font, const std::string &text, SDL_Color color) const;
 
-		void clear_back_buffer();
+		void clear_back_buffer() const;
 
-		void draw_texture(SDL_Texture* tex, SDL_Rect* clip = nullptr, SDL_Rect* rend = nullptr, float angle = 0.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void draw_texture(SDL_Texture* tex, const SDL_Rect* clip = nullptr, const SDL_Rect* rend = nullptr, float angle = 0.0f, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 
-		void render();
+		void render() const;
 
 	private:
 

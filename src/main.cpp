@@ -3,11 +3,11 @@ using namespace nashira;
 
 int main(int argc, char* args[])
 {
-	GameManager* game = GameManager::Instance();
+	GameManager* game = GameManager::instance();
 
-	game->Run();
+	game->run();
 
-	GameManager::Release();
+	GameManager::release();
 	game = NULL;
 
 	return 0;

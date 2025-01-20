@@ -64,7 +64,7 @@ namespace nashira {
 
 	public:
 
-		void updateScore();
+		void update_score();
 
 		int level = 0;
 		int current_objective = 5;
@@ -74,31 +74,31 @@ namespace nashira {
 
 		float alpha = 0.0f;
 
-		bool buttonOnePressed = false;
-		bool buttonTwoPressed = false;
+		bool button_one_pressed = false;
+		bool button_two_pressed = false;
 
 
-		float mButtonOneXPos = Graphics::SCREEN_WIDTH * 0.15f;
-		float mButtonTwoXPos = Graphics::SCREEN_WIDTH * 0.85f;
+		float m_button_one_x_pos = Graphics::SCREEN_WIDTH * 0.15f;
+		float m_button_two_x_pos = Graphics::SCREEN_WIDTH * 0.85f;
 
-		Vector2 mWeightBalance = ZERO;
+		Vector2 m_weight_balance = ZERO;
 
-		static GameManager* Instance();
-		static void Release();
+		static GameManager* instance();
+		static void release();
 
-		void Run();
+		void run();
 
 	private:
 		GameManager();
 		~GameManager();
 
-		void newLevel();
+		void new_level();
 
-		void EarlyUpdate();
-		void Update();
-		void LateUpdate();
+		void early_update();
+		void update();
+		void late_update();
 
-		void Render();
+		void render();
 	};
 
 }

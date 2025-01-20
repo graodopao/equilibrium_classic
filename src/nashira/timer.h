@@ -19,10 +19,10 @@ namespace nashira {
 		static void release();
 
 		void reset();
-		float delta_time() const;
+		[[nodiscard]] float delta_time() const;
 
-		void time_scale(float t);
-		float time_scale() const;
+		void time_scale(float scale);
+		[[nodiscard]] float time_scale() const;
 
 		void update();
 

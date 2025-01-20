@@ -90,12 +90,11 @@ bool Graphics::init()
 	return true;
 }
 
-SDL_Texture* Graphics::load_texture(std::string path)
-{
-	SDL_Texture* tex = NULL;
+SDL_Texture* Graphics::load_texture(const std::string &path) const {
+	SDL_Texture* tex = nullptr;
 
 	SDL_Surface* surface = IMG_Load(path.c_str());
-	if (surface == NULL)
+	if (surface == nullptr)
 	{
 		printf("Image failed to load: Path: (%s) - Error: %s\n", path.c_str(), IMG_GetError());
 
@@ -104,7 +103,7 @@ SDL_Texture* Graphics::load_texture(std::string path)
 	}
 
 	tex = SDL_CreateTextureFromSurface(mRenderer, surface);
-	if (surface == NULL)
+	if (surface == nullptr)
 	{
 		printf("Image failed to load from surface: Path: (%s) - Error: %s\n", path.c_str(), IMG_GetError());
 
@@ -116,41 +115,37 @@ SDL_Texture* Graphics::load_texture(std::string path)
 	return tex;
 }
 
-SDL_Texture* Graphics::create_text_texture(TTF_Font* font, std::string text, SDL_Color color)
-{
+SDL_Texture* Graphics::create_text_texture(TTF_Font* font, const std::string &text, const SDL_Color color) const {
 	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
 
-	if (surface == NULL)
+	if (surface == nullptr)
 	{
 		printf("Text render error: %s\n", TTF_GetError());
 		SDL_FreeSurface(surface);
-		return NULL;
+		return nullptr;
 	}
 
 	SDL_Texture* tex = SDL_CreateTextureFromSurface(mRenderer, surface);
 
-	if (tex == NULL)
+	if (tex == nullptr)
 	{
 		printf("Text texture creation error: %s\n", SDL_GetError());
 		SDL_FreeSurface(surface);
-		return NULL;
+		return nullptr;
 	}
 
 	SDL_FreeSurface(surface);
 	return tex;
 }
 
-void Graphics::clear_back_buffer()
-{
+void Graphics::clear_back_buffer() const {
 	SDL_RenderClear(mRenderer);
 }
 
-void Graphics::draw_texture(SDL_Texture* tex, SDL_Rect* clip, SDL_Rect* rend, float angle, SDL_RendererFlip flip)
-{
-	SDL_RenderCopyEx(mRenderer, tex, clip, rend, angle, NULL, flip);
+void Graphics::draw_texture(SDL_Texture* tex, const SDL_Rect* clip, const SDL_Rect* rend, const float angle, const SDL_RendererFlip flip) const {
+	SDL_RenderCopyEx(mRenderer, tex, clip, rend, angle, nullptr, flip);
 }
 
-void Graphics::render()
-{
+void Graphics::render() const {
 	SDL_RenderPresent(mRenderer);
 }

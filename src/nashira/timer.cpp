@@ -39,9 +39,9 @@ float Timer::delta_time() const {
 	return m_delta_time;
 }
 
-void Timer::time_scale(float t)
+void Timer::time_scale(const float scale)
 {
-	m_time_scale = t;
+	m_time_scale = scale;
 }
 
 float Timer::time_scale() const {

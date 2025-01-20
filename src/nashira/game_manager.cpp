@@ -3,7 +3,7 @@ using namespace nashira;
 
 GameManager* GameManager::sInstance = NULL;
 
-GameManager* GameManager::Instance()
+GameManager* GameManager::instance()
 {
 	if (sInstance == NULL)
 	{
@@ -13,7 +13,7 @@ GameManager* GameManager::Instance()
 	return sInstance;
 }
 
-void GameManager::Release()
+void GameManager::release()
 {
 	delete sInstance;
 	sInstance = NULL;
@@ -32,7 +32,7 @@ GameManager::GameManager()
 
 	mAssetManager = AssetManager::instance();
 
-	mInputManager = InputManager::Instance();
+	mInputManager = InputManager::instance();
 
 	mAudioManager = AudioManager::instance();
 
@@ -53,16 +53,16 @@ GameManager::GameManager()
 	playerScore->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.1));
 
 	mButtonOne = new Texture("ButtonFlip.png", 0, 0, 204, 463);
-	mButtonOne->set_position(Vector2(mButtonOneXPos, buttonHeight));
+	mButtonOne->set_position(Vector2(m_button_one_x_pos, buttonHeight));
 
 	mButtonOnePressed = new Texture("ButtonFlippressed.png", 0, 0, 204, 463);
-	mButtonOnePressed->set_position(Vector2(mButtonOneXPos, buttonHeight));
+	mButtonOnePressed->set_position(Vector2(m_button_one_x_pos, buttonHeight));
 
 	mButtonTwo = new Texture("Button.png", 0, 0, 204, 463);
-	mButtonTwo->set_position(Vector2(mButtonTwoXPos, buttonHeight));
+	mButtonTwo->set_position(Vector2(m_button_two_x_pos, buttonHeight));
 
 	mButtonTwoPressed = new Texture("Buttonpressed.png", 0, 0, 204, 463);
-	mButtonTwoPressed->set_position(Vector2(mButtonTwoXPos, buttonHeight));
+	mButtonTwoPressed->set_position(Vector2(m_button_two_x_pos, buttonHeight));
 
 	mMiddlePole = new Texture("Middle pole.png", 0, 0, 25, 360);
 	mMiddlePole->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.85f));
@@ -109,7 +109,7 @@ GameManager::GameManager()
 		particles.push_back(temp);
 	}
 
-	newLevel();
+	new_level();
 
 	mAudioManager->play_music("Background.wav");
 
@@ -126,7 +126,7 @@ GameManager::~GameManager()
 	Timer::release();
 	mTimer = NULL;
 
-	InputManager::Release();
+	InputManager::release();
 	mInputManager = NULL;
 
 	AudioManager::release();
@@ -195,47 +195,47 @@ GameManager::~GameManager()
 }
 
 
-void GameManager::EarlyUpdate()
+void GameManager::early_update()
 {
 	mTimer->reset();
-	mInputManager->Update();
+	mInputManager->update();
 }
 
 
-void GameManager::Update()
+void GameManager::update()
 {
 	for (Texture* i : particles)
 	{
 		i->particle_update(mTimer->delta_time());
 	}
 
-	buttonOnePressed = false;
-	buttonTwoPressed = false;
+	button_one_pressed = false;
+	button_two_pressed = false;
 
-	if (mInputManager->MouseButtonDown(InputManager::left))
+	if (mInputManager->mouse_button_down(InputManager::left))
 	{
 
-		bool isPressed = mInputManager->MouseButtonPressed(InputManager::left);
+		bool isPressed = mInputManager->mouse_button_pressed(InputManager::left);
 
-		if (mInputManager->MouseIsInArea(mButtonOneXPos - mButtonOne->get_width() / 2, buttonHeight - mButtonOne->get_height() / 2, mButtonOneXPos + mButtonOne->get_width() / 2, buttonHeight + mButtonOne->get_height() / 2))
+		if (mInputManager->mouse_is_in_area(m_button_one_x_pos - mButtonOne->get_width() / 2, buttonHeight - mButtonOne->get_height() / 2, m_button_one_x_pos + mButtonOne->get_width() / 2, buttonHeight + mButtonOne->get_height() / 2))
 		{
 			if (isPressed)
 			{
 				mAudioManager->play_sfx("Button.wav");
 			}
 
-			buttonOnePressed = true;
+			button_one_pressed = true;
 		}
 
 		// Button two
-		if (mInputManager->MouseIsInArea(mButtonTwoXPos - mButtonTwo->get_width() / 2, buttonHeight - mButtonTwo->get_height() / 2, mButtonTwoXPos + mButtonTwo->get_width() / 2, buttonHeight + mButtonTwo->get_height() / 2))
+		if (mInputManager->mouse_is_in_area(m_button_two_x_pos - mButtonTwo->get_width() / 2, buttonHeight - mButtonTwo->get_height() / 2, m_button_two_x_pos + mButtonTwo->get_width() / 2, buttonHeight + mButtonTwo->get_height() / 2))
 		{
 			if (isPressed)
 			{
 				mAudioManager->play_sfx("Button.wav");
 			}
 
-			buttonTwoPressed = true;
+			button_two_pressed = true;
 		}
 
 		if (buttonPressTick >= buttonPressTimer)
@@ -243,13 +243,13 @@ void GameManager::Update()
 			buttonPressTick = 0;
 
 			// Button one
-			if (mInputManager->MouseIsInArea(mButtonOneXPos - mButtonOne->get_width() / 2, buttonHeight - mButtonOne->get_height() / 2, mButtonOneXPos + mButtonOne->get_width() / 2, buttonHeight + mButtonOne->get_height() / 2))
+			if (mInputManager->mouse_is_in_area(m_button_one_x_pos - mButtonOne->get_width() / 2, buttonHeight - mButtonOne->get_height() / 2, m_button_one_x_pos + mButtonOne->get_width() / 2, buttonHeight + mButtonOne->get_height() / 2))
 			{
 				platformWeight -= balanceChangeForce;
 			}
 
 			// Button two
-			if (mInputManager->MouseIsInArea(mButtonTwoXPos - mButtonTwo->get_width() / 2, buttonHeight - mButtonTwo->get_height() / 2, mButtonTwoXPos + mButtonTwo->get_width() / 2, buttonHeight + mButtonTwo->get_height() / 2))
+			if (mInputManager->mouse_is_in_area(m_button_two_x_pos - mButtonTwo->get_width() / 2, buttonHeight - mButtonTwo->get_height() / 2, m_button_two_x_pos + mButtonTwo->get_width() / 2, buttonHeight + mButtonTwo->get_height() / 2))
 			{
 				platformWeight += balanceChangeForce;
 			}
@@ -263,7 +263,7 @@ void GameManager::Update()
 	float _rx = mPlate->rotate_point(mPlate->get_position(), mPlate->get_width() / 2, mPlate->Rotation());
 	float _lx = mPlate->rotate_point(mPlate->get_position(), -mPlate->get_width() / 2, mPlate->Rotation());
 
-	mWeightBalance = ZERO;
+	m_weight_balance = ZERO;
 
 	if (!finishedRound && !lost)
 	{
@@ -277,13 +277,13 @@ void GameManager::Update()
 			{
 				float result = (_x / _rx - 0.5f) / 6;
 
-				mWeightBalance.y += resultWeight * result;
+				m_weight_balance.y += resultWeight * result;
 			}
 			else
 			{
 				float result = (1 - (_x / _lx - 1)) / 6;
 
-				mWeightBalance.x += resultWeight * result;
+				m_weight_balance.x += resultWeight * result;
 			}
 		}
 	}
@@ -309,10 +309,10 @@ void GameManager::Update()
 		}
 
 		previous_completed_objectives = completed_objectives;
-		updateScore();
+		update_score();
 	}
 
-	float finalResult = (mWeightBalance.y - mWeightBalance.x) + platformWeight;
+	float finalResult = (m_weight_balance.y - m_weight_balance.x) + platformWeight;
 
 	if (!finishedRound && !lost)
 	{
@@ -334,7 +334,7 @@ void GameManager::Update()
 
 	if (alpha >= 250 && finishedRound)
 	{
-		newLevel();
+		new_level();
 	}
 
 	if (max_chances <= 0)
@@ -342,18 +342,18 @@ void GameManager::Update()
 		lost = true;
 	}
 
-	if (lost && mInputManager->KeyPressed(SDL_SCANCODE_SPACE))
+	if (lost && mInputManager->key_pressed(SDL_SCANCODE_SPACE))
 	{
 		level = 0;
 		max_chances = 26;
 		current_score = 0;
 		lost = false;
 
-		newLevel();
+		new_level();
 	}
 }
 
-void GameManager::newLevel()
+void GameManager::new_level()
 {
 
 	level++;
@@ -364,7 +364,7 @@ void GameManager::newLevel()
 	completed_objectives = 0;
 	previous_completed_objectives = 0;
 
-	updateScore();
+	update_score();
 
 	finishedRound = 0;
 	mPlate->mRotation = 0;
@@ -404,7 +404,7 @@ void GameManager::newLevel()
 	}
 }
 
-void GameManager::updateScore()
+void GameManager::update_score()
 {
 	delete mScore;
 	mScore = NULL;
@@ -417,12 +417,12 @@ void GameManager::updateScore()
 	mScore->set_position(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.2));
 }
 
-void GameManager::LateUpdate()
+void GameManager::late_update()
 {
-	mInputManager->UpdatePreviousInput();
+	mInputManager->update_previous_input();
 }
 
-void GameManager::Render()
+void GameManager::render()
 {
 
 	mGraphics->clear_back_buffer();
@@ -433,7 +433,7 @@ void GameManager::Render()
 		i->render();
 	}
 
-	if (!buttonOnePressed)
+	if (!button_one_pressed)
 	{
 		mButtonOne->render();
 	}
@@ -442,7 +442,7 @@ void GameManager::Render()
 		mButtonOnePressed->render();
 	}
 
-	if (!buttonTwoPressed)
+	if (!button_two_pressed)
 	{
 		mButtonTwo->render();
 	}
@@ -497,7 +497,7 @@ void GameManager::Render()
 	mGraphics->render();
 }
 
-void GameManager::Run()
+void GameManager::run()
 {
 	while (!mQuit)
 	{
@@ -513,10 +513,10 @@ void GameManager::Run()
 
 		if (mTimer->delta_time() >= 1.0f / FRAME_RATE)
 		{
-			EarlyUpdate();
-			Update();
-			LateUpdate();
-			Render();
+			early_update();
+			update();
+			late_update();
+			render();
 		}
 	}
 }

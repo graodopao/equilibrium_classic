@@ -1,46 +1,67 @@
 #include "input_manager.h"
 using namespace nashira;
 
-InputManager* InputManager::sInstance = NULL;
+InputManager* InputManager::s_instance = nullptr;
 
-InputManager* InputManager::Instance()
+InputManager* InputManager::instance()
 {
-	if (sInstance == NULL)
+	if (s_instance == nullptr)
 	{
-		sInstance = new InputManager();
+		s_instance = new InputManager();
 	}
 
-	return sInstance;
+	return s_instance;
 }
 
-void InputManager::Release()
+void InputManager::release()
 {
-	delete sInstance;
-	sInstance = NULL;
+	delete s_instance;
+	s_instance = nullptr;
 }
 
-bool InputManager::KeyDown(SDL_Scancode scanCode)
-{
-	return mKeyboardState[scanCode];
+bool InputManager::key_down(const SDL_Scancode scan_code) const {
+	return m_keyboard_state[scan_code];
 }
 
-bool InputManager::KeyPressed(SDL_Scancode scanCode)
-{
-	return !mPrevKeyboardState[scanCode] && mKeyboardState[scanCode];
+bool InputManager::key_pressed(const SDL_Scancode scan_code) const {
+	return !m_prev_keyboard_state[scan_code] && m_keyboard_state[scan_code];
 }
 
-bool InputManager::KeyReleased(SDL_Scancode scanCode)
-{
-	return mPrevKeyboardState[scanCode] && !mKeyboardState[scanCode];
+bool InputManager::key_released(const SDL_Scancode scan_code) const {
+	return m_prev_keyboard_state[scan_code] && !m_keyboard_state[scan_code];
 }
 
-Vector2 InputManager::MouseGetPos()
-{
-	return Vector2((float)mMouseXPos, (float)mMouseYPos);
+Vector2 InputManager::mouse_get_pos() const {
+	return {static_cast<float>(m_mouse_x_pos), static_cast<float>(m_mouse_y_pos)};
 }
 
-bool InputManager::MouseButtonDown(MOUSE_BUTTONS button)
-{
+bool InputManager::mouse_button_down(const MOUSE_BUTTONS button) const {
+	Uint32 mask = 0;
+
+	switch (button)
+	{
+	case (left):
+		mask = SDL_BUTTON_LMASK;
+		break;
+	case (middle):
+		mask = SDL_BUTTON_MMASK;
+		break;
+	case(right):
+		mask = SDL_BUTTON_RMASK;
+		break;
+	case (back):
+		mask = SDL_BUTTON_X1MASK;
+		break;
+	case (forward):
+		mask = SDL_BUTTON_X2MASK;
+		break;
+	}
+
+	return (m_mouse_state & mask);
+}
+
+
+bool InputManager::mouse_button_pressed(const MOUSE_BUTTONS button) const {
 	Uint32 mask = 0;
 
 	switch (button)
@@ -67,12 +88,11 @@ bool InputManager::MouseButtonDown(MOUSE_BUTTONS button)
 		break;
 	}
 
-	return (mMouseState & mask);
+	return !(m_prev_mouse_state & mask) && (m_mouse_state & mask);
 }
 
 
-bool InputManager::MouseButtonPressed(MOUSE_BUTTONS button)
-{
+bool InputManager::mouse_button_released(const MOUSE_BUTTONS button) const {
 	Uint32 mask = 0;
 
 	switch (button)
@@ -99,68 +119,34 @@ bool InputManager::MouseButtonPressed(MOUSE_BUTTONS button)
 		break;
 	}
 
-	return !(mPrevMouseState & mask) && (mMouseState & mask);
+	return (m_prev_mouse_state & mask) && !(m_mouse_state & mask);
 }
 
-
-bool InputManager::MouseButtonReleased(MOUSE_BUTTONS button)
-{
-	Uint32 mask = 0;
-
-	switch (button)
-	{
-
-	case (left):
-		mask = SDL_BUTTON_LMASK;
-		break;
-
-	case(right):
-		mask = SDL_BUTTON_RMASK;
-		break;
-
-	case (middle):
-		mask = SDL_BUTTON_MMASK;
-		break;
-
-	case (back):
-		mask = SDL_BUTTON_X1MASK;
-		break;
-
-	case (forward):
-		mask = SDL_BUTTON_X2MASK;
-		break;
-	}
-
-	return (mPrevMouseState & mask) && !(mMouseState & mask);
-}
-
-bool InputManager::MouseIsInArea(int x1, int y1, int x2, int y2)
-{
-	Vector2 pos = MouseGetPos();
+bool InputManager::mouse_is_in_area(const int x1, const int y1, const int x2, const int y2) const {
+	Vector2 pos = mouse_get_pos();
 
 	return (pos.x >= x1 && pos.y >= y1 && pos.x <= x2 && pos.y <= y2);
 }
 
-void InputManager::Update()
+void InputManager::update()
 {
-	mMouseState = SDL_GetMouseState(&mMouseXPos, &mMouseYPos);
+	m_mouse_state = SDL_GetMouseState(&m_mouse_x_pos, &m_mouse_y_pos);
 }
 
-void InputManager::UpdatePreviousInput()
+void InputManager::update_previous_input()
 {
-	memcpy(mPrevKeyboardState, mKeyboardState, mKeyLength);
-	mPrevMouseState = mMouseState;
+	memcpy(m_prev_keyboard_state, m_keyboard_state, m_key_length);
+	m_prev_mouse_state = m_mouse_state;
 }
 
-InputManager::InputManager()
-{
-	mKeyboardState = SDL_GetKeyboardState(&mKeyLength);
-	mPrevKeyboardState = new Uint8[mKeyLength];
-	memcpy(mPrevKeyboardState, mKeyboardState, mKeyLength);
+InputManager::InputManager(): m_prev_mouse_state(0), m_mouse_state(0), m_mouse_x_pos(0), m_mouse_y_pos(0) {
+	m_keyboard_state = SDL_GetKeyboardState(&m_key_length);
+	m_prev_keyboard_state = new Uint8[m_key_length];
+	memcpy(m_prev_keyboard_state, m_keyboard_state, m_key_length);
 }
 
 InputManager::~InputManager()
 {
-	delete[] mPrevKeyboardState;
-	mPrevKeyboardState = NULL;
+	delete[] m_prev_keyboard_state;
+	m_prev_keyboard_state = nullptr;
 }
