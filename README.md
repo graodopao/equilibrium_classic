@@ -1,5 +1,5 @@
 # Equilibrium | Balance City
-Equilibrium, aka Balance City, is a game about balancing a city on top of a platform by controlling its weight, avoiding that the constructions slide off of the platform and break.
+Equilibrium, aka Balance City, is a game about balancing a city on top of a platform by controlling its weight balance, avoiding that the constructions slide off of the platform and break.
 
 # Dependencies
 SDL2, SDL2_image, SDL2_mixer, and SDL2_ttf were used for the creation of the engine behind the game (internally called Nashira). The game and the engine were built using C++.
