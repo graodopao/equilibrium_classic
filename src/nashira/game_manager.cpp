@@ -395,7 +395,6 @@ void GameManager::new_level()
 		temp->set_position(Vector2(Graphics::SCREEN_WIDTH / 2 + _x - 250, Graphics::SCREEN_HEIGHT / 2 + 70));
 
 		float cooldown = rand() % 500 + 1;
-		printf("%f\n", cooldown);
 
 		temp->set_building(frameTemp, 50, false, cooldown);
 		temp->parent(m_plate);

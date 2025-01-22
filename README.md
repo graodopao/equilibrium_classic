@@ -17,4 +17,4 @@ So far, I've refactored many aspects that were very unsatisfactory to me, as the
 # Contact
 My email: `tiago170304@gmail.com`
 
-My discord: `ograodopao`
+My discord: `graodopao`

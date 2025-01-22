@@ -171,7 +171,6 @@ float Texture::building_update(float delta_time, float angle, float leftPoint, f
 
 					if (second_texture->is_demolished())
 					{
-						printf("Terminated\n");
 						objective_term++;
 						second_texture = nullptr;
 					}
