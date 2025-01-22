@@ -7,13 +7,13 @@ namespace nashira {
 	{
 	public:
 
-		enum SPACE
+		enum class SPACE
 		{
-			LOCAL,
-			WORLD
+			LOCAL = 0,
+			WORLD = 1
 		};
 
-		float mRotation;
+		float m_rotation;
 
 	private:
 
@@ -30,13 +30,13 @@ namespace nashira {
 		virtual ~GameEntity();
 
 		void set_position(Vector2 position);
-		Vector2 get_position(SPACE space = WORLD) const;
+		[[nodiscard]] Vector2 get_position(SPACE space = SPACE::WORLD) const;
 
-		void Rotation(float rotation);
-		float Rotation(SPACE space = WORLD);
+		void Rotation(float degree_angle);
+		[[nodiscard]] float Rotation(SPACE space = SPACE::WORLD) const;
 
 		void Scale(Vector2 scale);
-		Vector2 Scale(SPACE space = WORLD);
+		Vector2 Scale(SPACE space = SPACE::WORLD);
 
 		void Active(bool active);
 		bool Active();

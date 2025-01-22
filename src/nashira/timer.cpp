@@ -1,4 +1,4 @@
-#include "timer.h";
+#include "timer.h"
 using namespace nashira;
 
 Timer* Timer::s_instance = std::nullptr_t();

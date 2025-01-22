@@ -124,7 +124,7 @@ float Texture::building_update(float delta_time, float angle, float leftPoint, f
 				}
 				current_building_state = falling;
 
-				Vector2 last_pos = get_position(WORLD);
+				Vector2 last_pos = get_position(SPACE::WORLD);
 
 				parent(nullptr);
 				set_position(last_pos);
@@ -282,14 +282,14 @@ Texture::~Texture()
 
 void Texture::render()
 {
-	Vector2 pos = get_position(WORLD);
-	Vector2 scale = Scale(WORLD);
+	Vector2 pos = get_position(SPACE::WORLD);
+	Vector2 scale = Scale(SPACE::WORLD);
 	m_render_rect.x = (int)(pos.x - m_width*scale.x * 0.5f);
 	m_render_rect.y = (int)(pos.y - m_height*scale.y * 0.5f);
 	m_render_rect.w = (int)(m_width * scale.x);
 	m_render_rect.h = (int)(m_height * scale.y);
 
-	m_graphics->draw_texture(m_tex, m_clipped ? &m_clip_rect : NULL, &m_render_rect, Rotation(WORLD));
+	m_graphics->draw_texture(m_tex, m_clipped ? &m_clip_rect : NULL, &m_render_rect, Rotation(SPACE::WORLD));
 
 	if (second_texture != NULL)
 	{

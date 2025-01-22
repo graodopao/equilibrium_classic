@@ -8,7 +8,7 @@ int main(int argc, char* args[])
 	game->run();
 
 	GameManager::release();
-	game = NULL;
+	game = nullptr;
 
 	return 0;
 }

@@ -10,56 +10,56 @@ namespace nashira {
 	class GameManager
 	{
 	private:
-		static GameManager* sInstance;
+		static GameManager* s_instance;
 
 		const int FRAME_RATE = 120;
 
-		bool mQuit;
-		Graphics* mGraphics;
-		AssetManager* mAssetManager;
-		InputManager* mInputManager;
-		AudioManager* mAudioManager;
+		bool m_quit;
+		Graphics* m_graphics;
+		AssetManager* m_asset_manager;
+		InputManager* m_input_manager;
+		AudioManager* m_audio_manager;
 
-		Timer* mTimer;
+		Timer* m_timer;
 
-		SDL_Event mEvents;
+		SDL_Event m_events{};
 
-		Texture* mButtonOne;
-		Texture* mButtonOnePressed;
-		Texture* mButtonTwo;
-		Texture* mButtonTwoPressed;
-		Texture* mMiddlePole;
-		Texture* mPlate;
-		Texture* mBlack;
-		Texture* gameOverText;
+		Texture* m_button_one;
+		Texture* m_button_one_pressed;
+		Texture* m_button_two;
+		Texture* m_button_two_pressed;
+		Texture* m_middle_pole;
+		Texture* m_plate;
+		Texture* m_black;
+		Texture* game_over_text;
 
-		std::vector<Texture*> lightDotsRight;
-		std::vector<Texture*> lightDotsLeft;
+		std::vector<Texture*> light_dots_right;
+		std::vector<Texture*> light_dots_left;
 		std::vector<Texture*> particles;
 
 
-		Texture* mScore;
-		Texture* playerScore;
+		Texture* m_score;
+		Texture* player_score;
 
-		Texture* mLights;
+		Texture* m_lights;
 
 		std::vector<Texture*> constructions;
 
-		float buttonHeight = Graphics::SCREEN_HEIGHT * 0.95f;
-		float platformAngle = 0.0f;
+		float button_height = Graphics::SCREEN_HEIGHT * 0.95f;
+		float platform_angle = 0.0f;
 
-		float platformWeight = 0.0f;
-		float balanceChangeForce = 8.0f;
+		float platform_weight = 0.0f;
+		float balance_change_force = 8.0f;
 
-		float buttonPressTimer = 30.0f;
-		float buttonPressTick = 0.0f;
+		float button_press_timer = 30.0f;
+		float button_press_tick = 0.0f;
 
 		int max_chances = 26;
 		int current_score = 0;
 
 		int objectives_terminated = 0;
 
-		bool finishedRound = false;
+		bool finished_round = false;
 		bool lost = false;
 
 	public:
