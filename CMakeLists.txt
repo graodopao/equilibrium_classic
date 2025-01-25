@@ -22,6 +22,11 @@ file(GLOB SOURCES
 )
 
 add_executable(Equilibrium ${SOURCES})
+
+if (WIN32) # Adding this so the CMD doesn't popup when opening the game on Windows
+    set_target_properties(Equilibrium PROPERTIES WIN32_EXECUTABLE TRUE)
+endif ()
+
 target_link_libraries(Equilibrium PRIVATE
         ${SDL2_LIBRARIES}
         $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
