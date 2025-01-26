@@ -1,0 +1,3 @@
+[submodule "src/nashira"]
+	path = src/nashira
+	url = https://github.com/graodopao/nashira

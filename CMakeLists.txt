@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.7)
 include(CMakePrintHelpers)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
 
 project(Equilibrium)
 
@@ -13,9 +13,9 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_MIXER
 cmake_print_variables(${SDL2_INCLUDE_DIRS})
 
 file(GLOB SOURCES
-        "src/nashira/*.h"
-        "src/nashira/*.hpp"
-        "src/nashira/*.cpp"
+        "src/nashira/src/*.h"
+        "src/nashira/src/*.hpp"
+        "src/nashira/src/*.cpp"
         "src/*.h"
         "src/*.hpp"
         "src/*.cpp"
